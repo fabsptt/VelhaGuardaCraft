@@ -4,7 +4,7 @@
 body{margin:0;background:radial-gradient(circle at 50% 0,#292116 0,#100e0b 42%);color:var(--text);font:14px Inter,Segoe UI,Arial,sans-serif}
 .hero{width:100%;padding:0;margin:0;border-bottom:1px solid var(--line);background:#100e0b}
 .hero-inner{width:100%;max-width:1500px;margin:0 auto;display:flex;justify-content:center;align-items:center}
-.guild-banner{display:block;width:100%;height:auto;max-height:520px;object-fit:contain;object-position:center;filter:drop-shadow(0 5px 12px #0009)}
+.guild-banner{display:block;width:100%;height:auto;max-height:400px;object-fit:contain;object-position:center;filter:drop-shadow(0 5px 12px #0009)}
 .wrap{max-width:1180px;margin:28px auto;padding:0 16px}
 .dashboard,.panel{background:linear-gradient(180deg,rgba(38,31,22,.96),rgba(24,20,15,.98));border:1px solid var(--line);box-shadow:0 12px 35px #0007}
 .dashboard{padding:22px}
