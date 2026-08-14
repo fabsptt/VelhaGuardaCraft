@@ -66,6 +66,83 @@ function requestedQuality() {
   return Number($("quality")?.value || 2);
 }
 
+
+function deriveCategory(r) {
+  const id = norm(r?.uniqueName || "");
+  const name = norm(r?.name || "");
+
+  // Albion item families. We derive this when the dump does not provide
+  // a category, so the UI never ends up with an empty category selector.
+  if (/(^| )?(main|1h|2h|off|war gloves|shapeshifter|quarterstaff|spear|bow|crossbow|dagger|sword|axe|mace|hammer|arcane|holy|nature|fire|frost|cursed|great arcane)/.test(id + " " + name))
+    return "Armas";
+
+  if (/(head|helmet|armor|chest|shoes|boots|cloth|leather|plate|helmet)/.test(id + " " + name))
+    return "Armaduras";
+
+  if (/(bag|cape)/.test(id + " " + name))
+    return "Acessórios";
+
+  if (/(tool|pickaxe|axe|sickle|stone hammer|wooden hammer|skinning|fishing)/.test(id + " " + name))
+    return "Ferramentas";
+
+  if (/(gather|harvester|miner|woodcutter|skinner|fisher)/.test(id + " " + name))
+    return "Equipamento de recolha";
+
+  if (/(mount|horse|ox|stag|boar|wolf|direwolf|swiftclaw|moabird|gryphon|mammoth)/.test(id + " " + name))
+    return "Montarias";
+
+  if (/(food|meal|stew|soup|omelette|pie|sandwich|salad|roast|fish)/.test(id + " " + name))
+    return "Comida";
+
+  if (/(potion|poison|elixir)/.test(id + " " + name))
+    return "Poções";
+
+  if (/(resource|ore|wood|hide|fiber|rock|stone|metalbar|plank|leather|cloth)/.test(id + " " + name))
+    return "Recursos / Refinados";
+
+  if (/(furniture|chest|table|bed|banner|construction|building|guild)/.test(id + " " + name))
+    return "Mobília / Construção";
+
+  if (/(offhand|shield|torch|book|orb|tome|mistcaller|cryptcandle|facebreaker)/.test(id + " " + name))
+    return "Mão secundária";
+
+  return "Outros";
+}
+
+function deriveTier(r) {
+  const raw = String(r?.tier ?? "").trim();
+  if (/^[2-8](?:\\.0)?$/.test(raw)) return Number(raw).toString();
+
+  const id = String(r?.uniqueName || "");
+  const m = id.match(/(?:^|_)T([2-8])(?:_|$)/i);
+  if (m) return m[1];
+
+  const n = String(r?.name || "").match(/\b(?:T)?([2-8])(?:\\.([0-4]))?\b/i);
+  return n ? n[1] : "";
+}
+
+function deriveEnchantment(r) {
+  const current = Number(r?.enchantment);
+  if (Number.isInteger(current) && current >= 0 && current <= 4) return current;
+
+  const id = String(r?.uniqueName || "");
+  const at = id.match(/@([0-4])(?:$|_)/);
+  if (at) return Number(at[1]);
+
+  const level = id.match(/(?:^|_)LEVEL([0-4])(?:$|_)/i);
+  if (level) return Number(level[1]);
+
+  return 0;
+}
+
+function normalizeRecipeMetadata(r) {
+  const out = {...r};
+  out.category = String(r?.category || "").trim() || deriveCategory(r);
+  out.tier = deriveTier(r);
+  out.enchantment = deriveEnchantment(r);
+  return out;
+}
+
 function wanted() {
   let list = recipes.slice();
   const q = norm($("search")?.value);
@@ -84,18 +161,22 @@ function wanted() {
 }
 
 function fillFilters() {
-  const cats = [...new Set(recipes.map(r => r.category).filter(Boolean))].sort();
-  const tiers = [...new Set(recipes.map(r => r.tier).filter(v => v !== null && v !== undefined && v !== ""))]
-    .sort((a,b) => Number(a)-Number(b));
+  const cats = [...new Set(recipes.map(r => r.category).filter(Boolean))]
+    .sort((a,b) => a.localeCompare(b, "pt"));
+
+  const tiers = [...new Set(
+    recipes.map(r => r.tier).filter(v => v !== null && v !== undefined && v !== "")
+  )].sort((a,b) => Number(a)-Number(b));
 
   if ($("category")) {
     $("category").innerHTML =
-      `<option value="">Todas</option>` +
+      `<option value="">Todas as categorias</option>` +
       cats.map(x => `<option value="${esc(x)}">${esc(x)}</option>`).join("");
   }
+
   if ($("tier")) {
     $("tier").innerHTML =
-      `<option value="">Todos</option>` +
+      `<option value="">Todos os tiers</option>` +
       tiers.map(x => `<option value="${esc(x)}">T${esc(x)}</option>`).join("");
   }
 }
@@ -390,6 +471,7 @@ async function loadData() {
     if (!res.ok) throw new Error(`recipes.json HTTP ${res.status}`);
     recipes = await res.json();
     if (!Array.isArray(recipes)) throw new Error("recipes.json não é um array");
+    recipes = recipes.map(normalizeRecipeMetadata);
     fillFilters();
     renderRows();
     $("status").textContent = `${recipes.length.toLocaleString("pt-PT")} receitas carregadas. Carrega em ATUALIZAR PREÇOS.`;
