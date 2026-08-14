@@ -1,0 +1,88 @@
+{
+  "server": "Europe",
+  "updated": "2026-08-14",
+  "royal_city_base_production_bonus": 18,
+  "craft_specialty_bonus": 15,
+  "refining_specialty_bonus": 40,
+  "focus_bonus": 59,
+  "cities": {
+    "Fort Sterling": {
+      "craft": [
+        "Hammer",
+        "Spear",
+        "Holy Staff",
+        "Plate Helmet",
+        "Cloth Armor"
+      ],
+      "refine": [
+        "Wood"
+      ]
+    },
+    "Lymhurst": {
+      "craft": [
+        "Sword",
+        "Bow",
+        "Arcane Staff",
+        "Leather Helmet",
+        "Leather Shoes"
+      ],
+      "refine": [
+        "Fiber"
+      ]
+    },
+    "Bridgewatch": {
+      "craft": [
+        "Crossbow",
+        "Dagger",
+        "Cursed Staff",
+        "Plate Armor",
+        "Cloth Shoes"
+      ],
+      "refine": [
+        "Stone"
+      ]
+    },
+    "Martlock": {
+      "craft": [
+        "Axe",
+        "Quarterstaff",
+        "Frost Staff",
+        "Plate Shoes",
+        "Off-Hand"
+      ],
+      "refine": [
+        "Hide"
+      ]
+    },
+    "Thetford": {
+      "craft": [
+        "Mace",
+        "Nature Staff",
+        "Fire Staff",
+        "Leather Armor",
+        "Cloth Helmet"
+      ],
+      "refine": [
+        "Ore"
+      ]
+    },
+    "Caerleon": {
+      "craft": [
+        "War Gloves",
+        "Shapeshifter Staff",
+        "Gathering Gear",
+        "Tools",
+        "Food"
+      ],
+      "refine": []
+    },
+    "Brecilien": {
+      "craft": [
+        "Cape",
+        "Bag",
+        "Potion"
+      ],
+      "refine": []
+    }
+  }
+}

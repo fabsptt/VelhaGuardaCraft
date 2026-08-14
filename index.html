@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Velha Guarda — Calculadora de Crafting e Mercado para Albion Online Europe">
+  <title>Velha Guarda — Crafting & Mercado</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="crest">VG</div>
+      <div>
+        <div class="eyebrow">ALBION ONLINE • SERVIDOR EUROPA</div>
+        <h1>VELHA GUARDA</h1>
+        <p>Crafting & Mercado — descobrir o que craftar, onde craftar e onde vender.</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="panel controls">
+      <div class="control search">
+        <label for="search">Pesquisar item</label>
+        <input id="search" type="search" placeholder="Ex.: Battleaxe, T8_SWORD, Cape...">
+      </div>
+
+      <div class="control">
+        <label for="category">Categoria</label>
+        <select id="category"><option value="">Todas</option></select>
+      </div>
+
+      <div class="control">
+        <label for="tier">Tier</label>
+        <select id="tier"><option value="">Todos</option></select>
+      </div>
+
+      <div class="control">
+        <label for="enchant">Encantamento</label>
+        <select id="enchant"><option value="">Todos</option></select>
+      </div>
+
+      <div class="control">
+        <label for="sort">Ordenar</label>
+        <select id="sort">
+          <option value="profit">Maior lucro</option>
+          <option value="roi">Maior ROI</option>
+          <option value="sale">Maior venda</option>
+          <option value="name">Nome</option>
+        </select>
+      </div>
+
+      <div class="control">
+        <label for="focus">Retorno</label>
+        <select id="focus">
+          <option value="none">Sem Focus</option>
+          <option value="focus">Com Focus</option>
+        </select>
+      </div>
+
+      <div class="control compact">
+        <label for="tax">Imposto mercado</label>
+        <input id="tax" type="number" min="0" max="20" step="0.1" value="4">
+      </div>
+
+      <div class="control compact">
+        <label for="stationFee">Taxa estação</label>
+        <input id="stationFee" type="number" min="0" max="100" step="0.1" value="0">
+      </div>
+
+      <button id="refresh" class="gold">ATUALIZAR PREÇOS</button>
+    </section>
+
+    <section class="status" id="status">
+      <span class="dot"></span>
+      <span id="statusText">A carregar base de dados...</span>
+    </section>
+
+    <section class="stats">
+      <div class="stat"><span>Receitas</span><strong id="recipeCount">—</strong></div>
+      <div class="stat"><span>Itens</span><strong id="itemCount">—</strong></div>
+      <div class="stat"><span>Com preços</span><strong id="pricedCount">—</strong></div>
+      <div class="stat"><span>Actualização</span><strong id="updatedAt">—</strong></div>
+    </section>
+
+    <section class="panel table-panel">
+      <div class="section-title">
+        <div>
+          <span class="eyebrow">OPORTUNIDADES</span>
+          <h2>Melhores itens para craftar</h2>
+        </div>
+        <button id="clear" class="ghost">Limpar filtros</button>
+      </div>
+
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Tier</th>
+              <th>Categoria</th>
+              <th>Craftar em</th>
+              <th>Vender em</th>
+              <th>Custo</th>
+              <th>Venda</th>
+              <th>Lucro</th>
+              <th>ROI</th>
+            </tr>
+          </thead>
+          <tbody id="rows">
+            <tr><td colspan="9" class="empty">A preparar dados...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel detail" id="detail">
+      <div class="empty">Seleccione um item para ver a receita completa.</div>
+    </section>
+
+    <footer>
+      <p><b>Fonte de receitas:</b> dados extraídos dos ficheiros de jogo através do ao-bin-dumps. <b>Preços:</b> Albion Online Data Project — Europe.</p>
+      <p>Os preços são dados observados pelos clientes do Albion Data Project e podem estar desactualizados para determinados itens/cidades.</p>
+    </footer>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

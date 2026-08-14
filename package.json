@@ -1,0 +1,8 @@
+{
+  "name": "velha-guarda-crafting",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "sync": "node scripts/sync-data.mjs"
+  }
+}
