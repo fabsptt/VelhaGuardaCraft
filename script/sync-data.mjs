@@ -1,99 +1,15 @@
-import fs from "node:fs/promises";
-import path from "node:path";
-
-const ROOT = process.cwd();
-const RAW_ITEMS = "https://raw.githubusercontent.com/ao-data/ao-bin-dumps/master/formatted/items.json";
-const OUT_ITEMS = path.join(ROOT, "data", "items.json");
-const OUT_RECIPES = path.join(ROOT, "data", "recipes.json");
-
-const sleep = ms => new Promise(r => setTimeout(r, ms));
-
-function findKey(obj, names){
-  if(!obj || typeof obj !== "object") return undefined;
-  const wanted = new Set(names.map(x=>x.toLowerCase()));
-  for(const [k,v] of Object.entries(obj)) if(wanted.has(k.toLowerCase())) return v;
-}
-function first(obj,names){ return findKey(obj,names); }
-function asArray(v){ return Array.isArray(v) ? v : (v && typeof v==="object" ? Object.values(v) : []); }
-
-function extractLocalized(item){
-  const names=first(item,["localizedNames","localizednames","LocalizedNames"]);
-  if(names && typeof names==="object") return names["EN-US"] || names["en-US"] || names["EN"] || Object.values(names)[0] || "";
-  return first(item,["name","Name","displayName","DisplayName"]) || "";
-}
-function extractUnique(item){
-  return first(item,["uniqueName","UniqueName","index","Index","id","Id"]);
-}
-function extractIngredients(item){
-  const req=first(item,["craftingRequirements","CraftingRequirements"]);
-  if(!req) return {ingredients:[],outputCount:1,valid:false};
-  const list=first(req,["craftResourceList","CraftResourceList","resources","Resources"]);
-  const ingredients=[];
-  for(const x of asArray(list)){
-    const id=first(x,["uniqueName","UniqueName","itemId","ItemId","id","Id"]);
-    const count=Number(first(x,["count","Count","amount","Amount"]) ?? 0);
-    if(id && count>0) ingredients.push({uniqueName:String(id),count});
-  }
-  const output=Number(first(item,["craftingOutputCount","CraftingOutputCount","outputCount","OutputCount"]) ?? first(req,["outputCount","OutputCount"]) ?? 1);
-  return {ingredients,outputCount:output||1,valid:ingredients.length>0};
-}
-function categoryOf(item){
-  return first(item,["shopCategory","ShopCategory","category","Category"]) || "";
-}
-function subcategoryOf(item){
-  return first(item,["shopSubCategory","ShopSubCategory","shopSubcategory","ShopSubcategory","subcategory","Subcategory"]) || "";
-}
-
-function walk(value, out=[]){
-  if(Array.isArray(value)){ for(const x of value) walk(x,out); return out; }
-  if(value && typeof value==="object"){
-    if(extractUnique(value)) out.push(value);
-    for(const [k,v] of Object.entries(value)){
-      if(!["craftingrequirements","craftResourceList"].includes(k.toLowerCase())) walk(v,out);
-    }
-  }
-  return out;
-}
-
-const res = await fetch(RAW_ITEMS);
-if(!res.ok) throw new Error(`Falha ao descarregar items.json: HTTP ${res.status}`);
-const raw = await res.json();
-const candidates = walk(raw);
-const seen = new Set();
-const items = {};
-const recipes = [];
-
-for(const item of candidates){
-  const unique = String(extractUnique(item) || "");
-  if(!unique || seen.has(unique)) continue;
-  seen.add(unique);
-  const localized = extractLocalized(item);
-  const rec = extractIngredients(item);
-  items[unique] = {
-    name: localized,
-    category: categoryOf(item),
-    subcategory: subcategoryOf(item),
-    tier: String(unique).match(/^T([1-8])(?:_|$)/i)?.[1] || null
-  };
-  if(rec.valid){
-    recipes.push({
-      uniqueName: unique,
-      name: localized,
-      category: categoryOf(item),
-      subcategory: subcategoryOf(item),
-      outputCount: rec.outputCount,
-      ingredients: rec.ingredients,
-      source: "ao-bin-dumps",
-      validated: true
-    });
-  }
-}
-
-recipes.sort((a,b)=>a.uniqueName.localeCompare(b.uniqueName));
-await fs.mkdir(path.dirname(OUT_ITEMS),{recursive:true});
-await fs.writeFile(OUT_ITEMS, JSON.stringify(items,null,2)+"\n");
-await fs.writeFile(OUT_RECIPES, JSON.stringify(recipes,null,2)+"\n");
-
-console.log(`Itens: ${Object.keys(items).length}`);
-console.log(`Receitas com craftingRequirements: ${recipes.length}`);
-console.log(`Ficheiros escritos: ${OUT_ITEMS}, ${OUT_RECIPES}`);
+import fs from 'node:fs/promises';
+import path from 'node:path';
+const root=process.cwd(), source='https://raw.githubusercontent.com/ao-data/ao-bin-dumps/master/formatted/items.json';
+const attr=(o,...ks)=>{if(!o||typeof o!=='object')return;for(const k of ks){if(k in o)return o[k];if(`@${k}` in o)return o[`@${k}`]}};
+const arr=v=>Array.isArray(v)?v:(v==null?[]:[v]); const str=v=>v==null?'':String(v);
+const id=o=>str(attr(o,'uniqueName','UniqueName','uniquename','id','Id','index','Index'));
+const name=o=>{const v=attr(o,'localizedNames','LocalizedNames','name','Name','displayName','DisplayName');if(typeof v==='string')return v;if(v&&typeof v==='object')return v['EN-US']||v['en-US']||v.EN||Object.values(v)[0]||'';return ''};
+const req=o=>attr(o,'craftingRequirements','CraftingRequirements','craftingrequirements');
+const mats=r=>{if(!r)return[];const x=attr(r,'craftResource','craftresource','craftResourceList','CraftResourceList','resources','Resources');return arr(x).map(m=>({uniqueName:str(attr(m,'uniqueName','UniqueName','uniquename','itemName','itemname','id','Id')),count:Number(attr(m,'count','Count','amount','Amount','itemAmount','itemamount')||0)})).filter(m=>m.uniqueName&&m.count>0)};
+const tier=(o,x)=>Number(attr(o,'tier','Tier')||(x.match(/^T([1-8])(?:_|$)/i)||[])[1]||0)||null;
+function walk(v,out=[]){if(Array.isArray(v)){v.forEach(x=>walk(x,out));return out}if(!v||typeof v!=='object')return out;if(id(v))out.push(v);for(const[k,x]of Object.entries(v)){const q=k.toLowerCase();if(q==='craftingrequirements'||q==='enchantments')continue;walk(x,out)}return out}
+function add(out,seen,item,uid,r,level){const ingredients=mats(r);if(!ingredients.length||seen.has(uid))return;seen.add(uid);out.push({uniqueName:uid,baseUniqueName:id(item),name:name(item),category:str(attr(item,'shopCategory','ShopCategory','category','Category')),subcategory:str(attr(item,'shopSubCategory','ShopSubCategory','shopSubcategory','ShopSubcategory','subcategory','Subcategory')),tier:tier(item,uid),enchantment:level,outputCount:Number(attr(item,'craftingOutputCount','CraftingOutputCount','outputCount','OutputCount')||1)||1,ingredients,craftingSilver:Number(attr(r,'silver','Silver')||0),craftingFocus:Number(attr(r,'craftingFocus','CraftingFocus','craftingfocus')||0),craftingTime:Number(attr(r,'time','Time')||0),source:'ao-bin-dumps',validated:true})}
+const res=await fetch(source);if(!res.ok)throw new Error(`HTTP ${res.status}`);const raw=await res.json(),nodes=walk(raw),items={},recipes=[],seen=new Set();
+for(const it of nodes){const base=id(it);if(!base)continue;items[base]={name:name(it),category:str(attr(it,'shopCategory','ShopCategory','category','Category')),subcategory:str(attr(it,'shopSubCategory','ShopSubCategory','shopSubcategory','ShopSubcategory','subcategory','Subcategory')),tier:tier(it,base)};add(recipes,seen,it,base,req(it),0);const ens=attr(it,'enchantments','Enchantments'),list=ens?attr(ens,'enchantment','Enchantment'):undefined;for(const e of arr(list)){const lv=Number(attr(e,'enchantmentLevel','EnchantmentLevel','enchantmentlevel','level','Level')||0);add(recipes,seen,it,`${base}_LEVEL${lv}`,req(e)||e,lv)}}
+recipes.sort((a,b)=>a.uniqueName.localeCompare(b.uniqueName));await fs.writeFile(path.join(root,'data/items.json'),JSON.stringify(items,null,2));await fs.writeFile(path.join(root,'data/recipes.json'),JSON.stringify(recipes,null,2));await fs.writeFile(path.join(root,'data/sync-report.json'),JSON.stringify({itemNodes:nodes.length,uniqueItems:Object.keys(items).length,recipes:recipes.length,enchantedRecipes:recipes.filter(x=>x.enchantment).length,generatedAt:new Date().toISOString()},null,2));console.log({items:Object.keys(items).length,recipes:recipes.length,enchanted:recipes.filter(x=>x.enchantment).length});
