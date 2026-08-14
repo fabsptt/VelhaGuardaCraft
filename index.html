@@ -1,29 +1,34 @@
 <!doctype html>
 <html lang="pt-PT">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Velha Guarda — Crafting Europe</title>
 <meta name="description" content="Velha Guarda — calculadora de crafting, materiais, RRR e mercado de Albion Online Europe.">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
 <header class="hero">
   <div class="hero-inner">
-    <div class="crest">
-      <img class="guild-banner" src="assets/banner-guilda.jpg" alt="Velha Guarda - Bónus de Refinação e Fabrico"
-           onerror="this.style.display='none';this.parentElement.classList.add('crest-fallback')">
-      <span class="crest-text">VG</span>
-    </div>
-    <div>
-      <div class="eyebrow">ALBION ONLINE • SERVIDOR EUROPA</div>
-      <h1>VELHA GUARDA</h1>
-      <p>Centro de Crafting & Mercado para os Crafters da guilda.</p>
-    </div>
+    <img
+      class="guild-banner"
+      src="assets/banner-guilda.jpg"
+      alt="Velha Guarda — Crafting Manager">
   </div>
 </header>
+
 <main class="wrap">
 <section class="dashboard">
-  <div class="headline"><div><span class="kicker">CRAFTING INTELIGENCE</span><h2>Descobre o que vale a pena craftar</h2><p>Compara custo, retorno, preço de venda, cidade de craft e cidade de venda.</p></div><button id="refresh" class="gold">↻ ATUALIZAR PREÇOS</button></div>
+  <div class="headline">
+    <div>
+      <span class="kicker">CRAFTING INTELIGENCE</span>
+      <h2>Descobre o que vale a pena craftar</h2>
+      <p>Compara custo, retorno, preço de venda, cidade de craft e cidade de venda.</p>
+    </div>
+    <button id="refresh" class="gold">↻ ATUALIZAR PREÇOS</button>
+  </div>
+
   <div class="controls">
     <label>Pesquisar<input id="search" type="search" placeholder="Sword, T8, Cape, T8_MAIN..."/></label>
     <label>Categoria<select id="category"><option value="">Todas</option></select></label>
@@ -36,11 +41,36 @@
     <label>Ordenar<select id="sort"><option value="profit">Maior lucro</option><option value="roi">Maior ROI</option><option value="margin">Maior margem</option><option value="sale">Maior venda</option><option value="name">Nome</option></select></label>
   </div>
 </section>
+
 <section class="notice" id="notice"><span class="dot"></span><span id="status">A carregar receitas...</span></section>
-<section class="cards"><div><small>RECEITAS</small><strong id="count">0</strong></div><div><small>COM PREÇO</small><strong id="priced">0</strong></div><div><small>MELHOR LUCRO</small><strong id="best">—</strong></div><div><small>ÚLTIMA LEITURA</small><strong id="updated">—</strong></div></section>
-<section class="panel"><div class="panel-head"><div><span class="kicker">OPORTUNIDADES</span><h2>Melhores crafts</h2></div><span id="resultInfo"></span></div><div class="table-wrap"><table><thead><tr><th>Item</th><th>Tier</th><th>Craft</th><th>Venda</th><th>Custo efetivo</th><th>Lucro</th><th>ROI</th><th>RRR</th><th></th></tr></thead><tbody id="rows"></tbody></table></div></section>
-<section class="panel details" id="details"><div class="empty">Seleciona um item para veres a receita completa.</div></section>
+
+<section class="cards">
+  <div><small>RECEITAS</small><strong id="count">0</strong></div>
+  <div><small>COM PREÇO</small><strong id="priced">0</strong></div>
+  <div><small>MELHOR LUCRO</small><strong id="best">—</strong></div>
+  <div><small>ÚLTIMA LEITURA</small><strong id="updated">—</strong></div>
+</section>
+
+<section class="panel">
+  <div class="panel-head">
+    <div><span class="kicker">OPORTUNIDADES</span><h2>Melhores crafts</h2></div>
+    <span id="resultInfo"></span>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Item</th><th>Tier</th><th>Craft</th><th>Venda</th><th>Custo efetivo</th><th>Lucro</th><th>ROI</th><th>RRR</th><th></th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+</section>
+
+<section class="panel details" id="details">
+  <div class="empty">Seleciona um item para veres a receita completa.</div>
+</section>
+
 <footer>Dados de mercado: Albion Online Data Project • Receitas: ao-bin-dumps • A data do preço é mostrada para evitar decisões com cotações antigas.</footer>
 </main>
+
 <script src="app.js"></script>
-</body></html>
+</body>
+</html>
