@@ -1,0 +1,32 @@
+name: Sincronizar dados Albion
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 */6 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Sincronizar itens e receitas
+        run: npm run sync
+
+      - name: Guardar alterações
+        run: |
+          git config user.name "Velha Guarda Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/items.json data/recipes.json
+          git diff --cached --quiet || git commit -m "Atualizar receitas Albion"
+          git push
