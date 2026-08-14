@@ -1,9 +1,6 @@
 import fs from 'node:fs/promises';
 
-const recipes = JSON.parse(
-  await fs.readFile('data/recipes.json', 'utf8')
-);
-
+const recipes = JSON.parse(await fs.readFile('data/recipes.json', 'utf8'));
 const errors = [];
 const ids = new Set();
 
@@ -12,9 +9,7 @@ for (const r of recipes) {
   if (ids.has(r.uniqueName)) errors.push(`Receita duplicada: ${r.uniqueName}`);
   ids.add(r.uniqueName);
 
-  if (!r.ingredients?.length) {
-    errors.push(`Sem ingredientes: ${r.uniqueName}`);
-  }
+  if (!r.ingredients?.length) errors.push(`Sem ingredientes: ${r.uniqueName}`);
 
   for (const m of r.ingredients || []) {
     if (!m.uniqueName || !(m.count > 0)) {
@@ -27,11 +22,7 @@ for (const r of recipes) {
   }
 }
 
-console.log(
-  `Receitas ${recipes.length}; ` +
-  `encantadas ${recipes.filter(x => x.enchantment > 0).length}; ` +
-  `erros ${errors.length}`
-);
+console.log(`Receitas ${recipes.length}; encantadas ${recipes.filter(x => x.enchantment > 0).length}; erros ${errors.length}`);
 
 if (errors.length) {
   console.error(errors.slice(0, 100).join('\n'));
