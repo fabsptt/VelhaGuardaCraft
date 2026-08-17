@@ -148,37 +148,16 @@ function deriveSubcategory(r){
 }
 
 function deriveTier(r){
-  // O tier base é sempre 4, 5, 6, 7 ou 8.
-  // Se o dump trouxer "5.1" no campo tier, guardamos apenas 5 e
-  // deriveEnchantment() recupera o .1 separadamente.
-  const raw = String(r?.tier ?? "").trim();
-  const mRaw = raw.match(/^T?([2-8])(?:\\.([0-4]))?$/i);
-  if(mRaw) return mRaw[1];
-
   const id=String(r?.uniqueName||"");
   const m=id.match(/(?:^|_)T([2-8])(?:_|$)/i);
-  return m ? m[1] : "";
+  return m ? m[1] : String(r?.tier||"").replace(/^T/i,"");
 }
-
 function deriveEnchantment(r){
-  const explicit=Number(r?.enchantment);
-  if(Number.isInteger(explicit) && explicit>=0 && explicit<=4) return explicit;
-
-  // Alguns dumps guardam o encantamento no próprio campo tier: 5.1, 5.2...
-  const raw=String(r?.tier ?? "").trim();
-  const mt=raw.match(/^T?[2-8]\\.([0-4])$/i);
-  if(mt) return Number(mt[1]);
-
+  if(Number.isInteger(Number(r?.enchantment))) return Number(r.enchantment);
   const id=String(r?.uniqueName||"");
-  const m=id.match(/@([0-4])$/);
-  if(m) return Number(m[1]);
-
-  const ml=id.match(/_LEVEL([0-4])$/i);
-  if(ml) return Number(ml[1]);
-
-  return 0;
+  const m=id.match(/@([0-4])$/) || id.match(/LEVEL([0-4])$/i);
+  return m ? Number(m[1]) : 0;
 }
-
 function normalizeRecipeMetadata(r){
   const out={...r};
   out.category=deriveCategory(out);
@@ -205,7 +184,7 @@ function fillFilters(){
   $("categoryNav").querySelectorAll(".nav-btn").forEach(b=>b.onclick=()=>{
     activeCategory=b.dataset.cat; activeSubcategory=""; updateNav(); renderRows();
   });
-  const tiers=[...new Set(recipes.map(r=>String(r.tier)).filter(Boolean))].sort((a,b)=>Number(a)-Number(b));
+  const tiers=[...new Set(recipes.map(r=>r.tier).filter(Boolean))].sort((a,b)=>Number(a)-Number(b));
   $("tier").innerHTML=`<option value="">Todos os tiers</option>`+tiers.map(t=>`<option value="${esc(t)}">T${esc(t)}</option>`).join("");
   updateNav();
 }
@@ -218,71 +197,31 @@ function updateNav(){
   $("catalogTitle").textContent=activeSubcategory || activeCategory || "Todas as categorias";
 }
 
-/* ---------- IDs DE MERCADO ---------- */
+/* IDs de mercado: materiais encantados podem existir como @1..@4. */
 function marketCandidates(id){
   const original=String(id||"").trim();
   if(!original) return [];
-
-  const out=new Set([original]);
-
-  // Se o ID já tem @, ele já é um ID de mercado válido.
-  if(/@[1-4]$/.test(original)) return [...out];
-
-  // Para equipamentos, consultar também os quatro encantamentos.
-  for(let e=1;e<=4;e++) out.add(`${original}@${e}`);
-
-  // Para materiais LEVEL1/2/3/4, manter LEVEL e testar o encantamento.
-  const m=original.match(/^(.*_LEVEL([1-4]))$/i);
-  if(m){
-    const base=m[1];
-    for(let e=1;e<=4;e++) out.add(`${base}@${e}`);
-  }
-
-  return [...out];
+  const real=marketId(original);
+  // O ID normalizado é o primeiro a ser consultado.
+  return [...new Set([real,original].filter(Boolean))];
 }
-
-function marketIdForRecipe(r){
-  const id=String(r?.uniqueName||"").trim();
-  if(!id) return "";
-
-  const e=Number(r?.enchantment)||0;
-  if(e>0 && !/@[1-4]$/.test(id)){
-    return `${id}@${e}`;
-  }
-  return id;
-}
-
 function idsNeeded(list){
   const set=new Set();
-
   for(const r of list){
-    // Item final: respeita o encantamento real da receita.
-    const finalId=marketIdForRecipe(r);
-    marketCandidates(finalId).forEach(x=>set.add(x));
-
-    // Materiais: consultar o ID original e variantes @.
-    for(const m of r.ingredients||[]){
-      marketCandidates(m.uniqueName).forEach(x=>set.add(x));
-    }
+    marketCandidates(r.uniqueName).forEach(x=>set.add(x));
+    for(const m of r.ingredients||[]) marketCandidates(m.uniqueName).forEach(x=>set.add(x));
   }
-
   return [...set];
 }
-
 function storePrice(itemId,row){
-  if(!row?.city || !itemId)return;
+  if(!row?.city)return;
   if(!prices.has(itemId))prices.set(itemId,new Map());
   prices.get(itemId).set(`${row.city}|${Number(row.quality)||1}`,{
-    sell:Number(row.sell_price_min)||0,
-    buy:Number(row.buy_price_max)||0,
-    quality:Number(row.quality)||1,
-    sellDate:row.sell_price_min_date||null,
-    buyDate:row.buy_price_max_date||null
+    sell:Number(row.sell_price_min)||0,buy:Number(row.buy_price_max)||0,quality:Number(row.quality)||1,
+    sellDate:row.sell_price_min_date||null,buyDate:row.buy_price_max_date||null
   });
-  const t1=row.sell_price_min_date?new Date(row.sell_price_min_date).getTime():0;
-  const t2=row.buy_price_max_date?new Date(row.buy_price_max_date).getTime():0;
-  if(Number.isFinite(t1))lastPriceDate=Math.max(lastPriceDate,t1);
-  if(Number.isFinite(t2))lastPriceDate=Math.max(lastPriceDate,t2);
+  const t=row.sell_price_min_date?new Date(row.sell_price_min_date).getTime():0;
+  if(Number.isFinite(t))lastPriceDate=Math.max(lastPriceDate,t);
 }
 async function getBatch(ids){
   if(!ids.length)return;
@@ -310,12 +249,12 @@ function priceFor(itemId,city,quality){
 }
 function cheapestMaterial(id,q){
   let best=null;
-  for(const city of CITIES){const p=priceFor(id,city,q);if(p&&(!best||p.sell<best.price))best={city,price:p.sell,quality:p.usedQuality,date:p.sellDate};}
+  for(const city of CITIES){const p=priceFor(id,city,q);if(p&&Number(p.sell)>0&&(!best||p.sell<best.price))best={city,price:p.sell,quality:p.usedQuality,date:p.sellDate};}
   return best;
 }
 function bestSale(id,q){
   let best=null;
-  for(const city of CITIES){const p=priceFor(id,city,q);if(p&&(!best||p.sell>best.price))best={city,price:p.sell,quality:p.usedQuality,date:p.sellDate};}
+  for(const city of CITIES){const p=priceFor(id,city,q);if(p&&Number(p.sell)>0&&(!best||p.sell>best.price))best={city,price:p.sell,quality:p.usedQuality,date:p.sellDate};}
   return best;
 }
 
@@ -345,7 +284,7 @@ function calculate(r){
       else{rawCost+=qty*p.price;materials.push({id:m.uniqueName,qty,price:p.price,city:p.city,quality:p.quality});}
     }
     if(materials.length&&materials.every(m=>m.price==null))continue;
-    const rrr=craftReturnRate(craftCity,r,focus),effective=rawCost*(1-rrr),crafting=Number(r.craftingSilver)||0,total=effective+crafting+effective*station,sale=bestSale(marketIdForRecipe(r),q);
+    const rrr=craftReturnRate(craftCity,r,focus),effective=rawCost*(1-rrr),crafting=Number(r.craftingSilver)||0,total=effective+crafting+effective*station,sale=bestSale(r.uniqueName,q);
     if(!sale){out.push({craftCity,saleCity:"—",sale:0,cost:total,profit:null,roi:null,margin:null,rrr:rrr*100,materials});continue;}
     const net=sale.price*(1-tax),profit=net-total,roi=total>0?profit/total*100:0,margin=net>0?profit/net*100:0;
     out.push({craftCity,saleCity:sale.city,sale:sale.price,cost:total,profit,roi,margin,rrr:rrr*100,materials,saleQuality:sale.quality,saleDate:sale.date});
@@ -353,12 +292,6 @@ function calculate(r){
   out.sort((a,b)=>(b.profit??-Infinity)-(a.profit??-Infinity));
   return out[0]||null;
 }
-function tierLabel(r){
-  const t=String(r?.tier||"");
-  const e=Number(r?.enchantment)||0;
-  return `T${t}${e?`.`+e:""}`;
-}
-
 function renderRows(){
   const list=wanted().map(r=>({r,c:calculate(r)})),sort=$("sort")?.value||"profit";
   list.sort((a,b)=>sort==="name"?ptName(a.r).localeCompare(ptName(b.r),"pt"):(Number(b.c?.[sort])||-Infinity)-(Number(a.c?.[sort])||-Infinity));
@@ -368,9 +301,11 @@ function renderRows(){
   $("resultInfo").textContent=`${list.length.toLocaleString("pt-PT")} itens nesta categoria`;
   $("rows").innerHTML=list.slice(0,150).map(({r,c})=>{
     const q=Number($("quality")?.value||2),img=iconHTML(r.uniqueName,q,58);
-    if(!c)return `<tr><td><div class="item-with-icon">${img}<div><span class="item">${esc(ptName(r))}</span><span class="sub">${esc(r.uniqueName)}</span></div></div></td><td>${esc(tierLabel(r))}</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td><button class="open" data-id="${esc(r.uniqueName)}">Ver</button></td></tr>`;
+    if(!c)return `<tr><td><div class="item-with-icon">${img}<div><span class="item">${esc(ptName(r))}</span><span class="sub">${esc(r.uniqueName)}</span></div></div></td><td>T${esc(r.tier)}${r.enchantment?".":""}${r.enchantment||""}</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td><button class="open" data-id="${esc(r.uniqueName)}">Ver</button></td></tr>`;
     const profit=c.profit==null?`<span class="muted">Sem venda</span>`:`<span class="${c.profit>=0?"profit":"negative"}">${fmt(c.profit)}</span>`;
-    return `<tr><td><div class="item-with-icon">${img}<div><span class="item">${esc(ptName(r))}</span><span class="sub">${esc(r.uniqueName)}</span></div></div></td><td>${esc(tierLabel(r))}</td><td>${esc(c.craftCity)}</td><td>${c.sale?fmt(c.sale):"—"}<span class="sub">${esc(c.saleCity)}</span></td><td>${fmt(c.cost)}</td><td>${profit}</td><td>${pct(c.roi)}</td><td>${pct(c.rrr)}</td><td><button class="open" data-id="${esc(r.uniqueName)}">Ver</button></td></tr>`;
+    const margin=c.margin==null?"—":pct(c.margin);
+    const state=c.profit==null?"SEM PREÇO":(c.margin>=20?"EXCELENTE":c.margin>=10?"BOA":c.margin>=5?"BAIXA":"NÃO COMPENSA");
+    return `<tr><td><div class="item-with-icon">${img}<div><span class="item">${esc(ptName(r))}</span><span class="sub">${esc(r.uniqueName)}</span></div></div></td><td>T${esc(r.tier)}${r.enchantment?"."+r.enchantment:""}</td><td>${esc(c.craftCity)}</td><td>${c.sale?fmt(c.sale):"—"}<span class="sub">${esc(c.saleCity)}</span></td><td>${fmt(c.cost)}</td><td>${profit}</td><td>${margin}</td><td>${pct(c.roi)}</td><td>${pct(c.rrr)}</td><td>${state}</td><td><button class="open" data-id="${esc(r.uniqueName)}">Ver</button></td></tr>`;
   }).join("");
   document.querySelectorAll(".open").forEach(b=>b.onclick=()=>showDetails(b.dataset.id));
   if(selectedRecipe)showDetails(selectedRecipe.uniqueName,false);
@@ -381,7 +316,7 @@ function showDetails(id,scroll=true){
   $("details").innerHTML=`<div class="recipe-title">${icon}<div><span class="kicker">RECEITA</span><h2>${esc(ptName(r))}</h2><span class="badge">${esc(r.uniqueName)}</span></div><div class="price-state">${c?.sale?"✓ Preços disponíveis":"⌛ A aguardar preços"}</div></div>
   <div class="detail-grid"><div class="box"><h3>MATERIAIS NECESSÁRIOS</h3>${(r.ingredients||[]).map(m=>{const p=c?.materials?.find(x=>x.id===m.uniqueName),mi=iconHTML(m.uniqueName,q,42);return `<div class="material"><div class="item-with-icon">${mi}<div><b>${esc(materialName(m.uniqueName))}</b><span class="sub">${p?.city?"Comprar em "+esc(p.city):"Preço indisponível"}</span></div></div><div><b>${Number(m.count)||0}</b><span class="sub">${p?.price?fmt(p.price)+" prata":"—"}</span></div></div>`}).join("")}</div>
   <div class="box"><h3>MELHOR CRAFT</h3>${c?`<div class="big-number">${esc(c.craftCity)}</div><div class="city"><span>Custo efetivo</span><b>${fmt(c.cost)}</b></div><div class="city"><span>RRR</span><b>${pct(c.rrr)}</b></div><div class="city"><span>Lucro</span><b class="${c.profit>=0?"profit":"negative"}">${c.profit==null?"—":fmt(c.profit)}</b></div>`:`<div class="empty">Ainda faltam preços.</div>`}</div>
-  <div class="box"><h3>MELHOR VENDA</h3>${c?.sale?`<div class="big-number">${esc(c.saleCity)}</div><div class="city"><span>Preço</span><b>${fmt(c.sale)}</b></div><div class="city"><span>ROI</span><b>${pct(c.roi)}</b></div><div class="city"><span>Qualidade</span><b>${esc(QUALITY_NAMES[c.saleQuality]||c.saleQuality)}</b></div>`:`<div class="empty">Sem preço de venda.</div>`}</div></div>`;
+  <div class="box"><h3>RENTABILIDADE</h3>${c?.sale?`<div class="big-number">${esc(c.saleCity)}</div><div class="city"><span>Preço de venda</span><b>${fmt(c.sale)}</b></div><div class="city"><span>Custo efetivo</span><b>${fmt(c.cost)}</b></div><div class="city"><span>Lucro líquido</span><b class="${c.profit>=0?"profit":"negative"}">${fmt(c.profit)}</b></div><div class="city"><span>Margem</span><b>${pct(c.margin)}</b></div><div class="city"><span>ROI</span><b>${pct(c.roi)}</b></div><div class="city"><span>RRR</span><b>${pct(c.rrr)}</b></div><div class="city"><span>Qualidade</span><b>${esc(QUALITY_NAMES[c.saleQuality]||c.saleQuality)}</b></div>`:`<div class="empty">Sem preço de venda.</div>`}</div></div>`;
   if(scroll)$("details").scrollIntoView({behavior:"smooth",block:"start"});
 }
 function materialName(id){
