@@ -20,9 +20,8 @@ function marketId(id){
   if(!s) return "";
   if(/@[0-4]$/.test(s)) return s;
   const m=s.match(/^(.*)_LEVEL([0-4])$/i);
-  // O LEVEL faz parte do item_id do Albion:
-  // T4_CLOTH_LEVEL1 -> T4_CLOTH_LEVEL1@1
-  // T4_CLOTH_LEVEL2 -> T4_CLOTH_LEVEL2@2
+  // LEVEL continua no item_id. Só acrescentamos @1/@2/@3/@4.
+  // Ex.: T4_CLOTH_LEVEL1 -> T4_CLOTH_LEVEL1@1
   if(m) return m[1] + `_LEVEL${m[2]}` + (m[2] === "0" ? "" : `@${m[2]}`);
   return s;
 }
@@ -252,12 +251,22 @@ function priceFor(itemId,city,quality){
 }
 function cheapestMaterial(id,q){
   let best=null;
-  for(const city of CITIES){const p=priceFor(id,city,q);if(p&&(!best||p.sell<best.price))best={city,price:p.sell,quality:p.usedQuality,date:p.sellDate};}
+  for(const city of CITIES){
+    const p=priceFor(id,city,q);
+    if(p && Number(p.sell)>0 && (!best || Number(p.sell)<best.price)){
+      best={city,price:Number(p.sell),quality:p.usedQuality,date:p.sellDate};
+    }
+  }
   return best;
 }
 function bestSale(id,q){
   let best=null;
-  for(const city of CITIES){const p=priceFor(id,city,q);if(p&&(!best||p.sell>best.price))best={city,price:p.sell,quality:p.usedQuality,date:p.sellDate};}
+  for(const city of CITIES){
+    const p=priceFor(id,city,q);
+    if(p && Number(p.sell)>0 && (!best || Number(p.sell)>best.price)){
+      best={city,price:Number(p.sell),quality:p.usedQuality,date:p.sellDate};
+    }
+  }
   return best;
 }
 
