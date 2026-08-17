@@ -20,7 +20,10 @@ function marketId(id){
   if(!s) return "";
   if(/@[0-4]$/.test(s)) return s;
   const m=s.match(/^(.*)_LEVEL([0-4])$/i);
-  if(m) return m[1] + (m[2] === "0" ? "" : `@${m[2]}`);
+  // O LEVEL faz parte do item_id do Albion:
+  // T4_CLOTH_LEVEL1 -> T4_CLOTH_LEVEL1@1
+  // T4_CLOTH_LEVEL2 -> T4_CLOTH_LEVEL2@2
+  if(m) return m[1] + `_LEVEL${m[2]}` + (m[2] === "0" ? "" : `@${m[2]}`);
   return s;
 }
 function itemIcon(id, quality=1, size=64){
