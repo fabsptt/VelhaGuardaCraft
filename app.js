@@ -19,6 +19,15 @@ function marketId(id){
   const s=String(id||"").trim();
   if(!s) return "";
   if(/@[0-4]$/.test(s)) return s;
+
+  // ATENÇÃO: materiais/refinados usam _LEVEL1/_LEVEL2...
+  // como parte do ID real do mercado. Não podem ser convertidos para @1.
+  // Ex.: T5_CLOTH_LEVEL1, T5_PLANKS_LEVEL1, T5_METALBAR_LEVEL1.
+  if(/^T[2-8]_(ORE|WOOD|HIDE|FIBER|ROCK|METALBAR|PLANKS|LEATHER|CLOTH|STONEBLOCK)_LEVEL[0-4]$/i.test(s)){
+    return s;
+  }
+
+  // Equipamentos usam @1/@2/@3/@4 no ID de mercado.
   const m=s.match(/^(.*)_LEVEL([0-4])$/i);
   if(m) return m[1] + (m[2] === "0" ? "" : `@${m[2]}`);
   return s;
@@ -202,8 +211,9 @@ function marketCandidates(id){
   const original=String(id||"").trim();
   if(!original) return [];
   const real=marketId(original);
-  // O ID normalizado é o primeiro a ser consultado.
-  return [...new Set([real,original].filter(Boolean))];
+  // Para materiais o original é o ID correto. Para equipamentos o real é @1..@4.
+  // Mantemos sempre os dois candidatos para compatibilidade com receitas antigas.
+  return [...new Set([original,real].filter(Boolean))];
 }
 function idsNeeded(list){
   const set=new Set();
@@ -249,12 +259,12 @@ function priceFor(itemId,city,quality){
 }
 function cheapestMaterial(id,q){
   let best=null;
-  for(const city of CITIES){const p=priceFor(id,city,q);if(p&&Number(p.sell)>0&&(!best||p.sell<best.price))best={city,price:p.sell,quality:p.usedQuality,date:p.sellDate};}
+  for(const city of CITIES){const p=priceFor(id,city,q);if(p&&(!best||p.sell<best.price))best={city,price:p.sell,quality:p.usedQuality,date:p.sellDate};}
   return best;
 }
 function bestSale(id,q){
   let best=null;
-  for(const city of CITIES){const p=priceFor(id,city,q);if(p&&Number(p.sell)>0&&(!best||p.sell>best.price))best={city,price:p.sell,quality:p.usedQuality,date:p.sellDate};}
+  for(const city of CITIES){const p=priceFor(id,city,q);if(p&&(!best||p.sell>best.price))best={city,price:p.sell,quality:p.usedQuality,date:p.sellDate};}
   return best;
 }
 
@@ -303,9 +313,7 @@ function renderRows(){
     const q=Number($("quality")?.value||2),img=iconHTML(r.uniqueName,q,58);
     if(!c)return `<tr><td><div class="item-with-icon">${img}<div><span class="item">${esc(ptName(r))}</span><span class="sub">${esc(r.uniqueName)}</span></div></div></td><td>T${esc(r.tier)}${r.enchantment?".":""}${r.enchantment||""}</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td><button class="open" data-id="${esc(r.uniqueName)}">Ver</button></td></tr>`;
     const profit=c.profit==null?`<span class="muted">Sem venda</span>`:`<span class="${c.profit>=0?"profit":"negative"}">${fmt(c.profit)}</span>`;
-    const margin=c.margin==null?"—":pct(c.margin);
-    const state=c.profit==null?"SEM PREÇO":(c.margin>=20?"EXCELENTE":c.margin>=10?"BOA":c.margin>=5?"BAIXA":"NÃO COMPENSA");
-    return `<tr><td><div class="item-with-icon">${img}<div><span class="item">${esc(ptName(r))}</span><span class="sub">${esc(r.uniqueName)}</span></div></div></td><td>T${esc(r.tier)}${r.enchantment?"."+r.enchantment:""}</td><td>${esc(c.craftCity)}</td><td>${c.sale?fmt(c.sale):"—"}<span class="sub">${esc(c.saleCity)}</span></td><td>${fmt(c.cost)}</td><td>${profit}</td><td>${margin}</td><td>${pct(c.roi)}</td><td>${pct(c.rrr)}</td><td>${state}</td><td><button class="open" data-id="${esc(r.uniqueName)}">Ver</button></td></tr>`;
+    return `<tr><td><div class="item-with-icon">${img}<div><span class="item">${esc(ptName(r))}</span><span class="sub">${esc(r.uniqueName)}</span></div></div></td><td>T${esc(r.tier)}${r.enchantment?"."+r.enchantment:""}</td><td>${esc(c.craftCity)}</td><td>${c.sale?fmt(c.sale):"—"}<span class="sub">${esc(c.saleCity)}</span></td><td>${fmt(c.cost)}</td><td>${profit}</td><td>${pct(c.roi)}</td><td>${pct(c.rrr)}</td><td><button class="open" data-id="${esc(r.uniqueName)}">Ver</button></td></tr>`;
   }).join("");
   document.querySelectorAll(".open").forEach(b=>b.onclick=()=>showDetails(b.dataset.id));
   if(selectedRecipe)showDetails(selectedRecipe.uniqueName,false);
@@ -316,7 +324,7 @@ function showDetails(id,scroll=true){
   $("details").innerHTML=`<div class="recipe-title">${icon}<div><span class="kicker">RECEITA</span><h2>${esc(ptName(r))}</h2><span class="badge">${esc(r.uniqueName)}</span></div><div class="price-state">${c?.sale?"✓ Preços disponíveis":"⌛ A aguardar preços"}</div></div>
   <div class="detail-grid"><div class="box"><h3>MATERIAIS NECESSÁRIOS</h3>${(r.ingredients||[]).map(m=>{const p=c?.materials?.find(x=>x.id===m.uniqueName),mi=iconHTML(m.uniqueName,q,42);return `<div class="material"><div class="item-with-icon">${mi}<div><b>${esc(materialName(m.uniqueName))}</b><span class="sub">${p?.city?"Comprar em "+esc(p.city):"Preço indisponível"}</span></div></div><div><b>${Number(m.count)||0}</b><span class="sub">${p?.price?fmt(p.price)+" prata":"—"}</span></div></div>`}).join("")}</div>
   <div class="box"><h3>MELHOR CRAFT</h3>${c?`<div class="big-number">${esc(c.craftCity)}</div><div class="city"><span>Custo efetivo</span><b>${fmt(c.cost)}</b></div><div class="city"><span>RRR</span><b>${pct(c.rrr)}</b></div><div class="city"><span>Lucro</span><b class="${c.profit>=0?"profit":"negative"}">${c.profit==null?"—":fmt(c.profit)}</b></div>`:`<div class="empty">Ainda faltam preços.</div>`}</div>
-  <div class="box"><h3>RENTABILIDADE</h3>${c?.sale?`<div class="big-number">${esc(c.saleCity)}</div><div class="city"><span>Preço de venda</span><b>${fmt(c.sale)}</b></div><div class="city"><span>Custo efetivo</span><b>${fmt(c.cost)}</b></div><div class="city"><span>Lucro líquido</span><b class="${c.profit>=0?"profit":"negative"}">${fmt(c.profit)}</b></div><div class="city"><span>Margem</span><b>${pct(c.margin)}</b></div><div class="city"><span>ROI</span><b>${pct(c.roi)}</b></div><div class="city"><span>RRR</span><b>${pct(c.rrr)}</b></div><div class="city"><span>Qualidade</span><b>${esc(QUALITY_NAMES[c.saleQuality]||c.saleQuality)}</b></div>`:`<div class="empty">Sem preço de venda.</div>`}</div></div>`;
+  <div class="box"><h3>MELHOR VENDA</h3>${c?.sale?`<div class="big-number">${esc(c.saleCity)}</div><div class="city"><span>Preço</span><b>${fmt(c.sale)}</b></div><div class="city"><span>ROI</span><b>${pct(c.roi)}</b></div><div class="city"><span>Qualidade</span><b>${esc(QUALITY_NAMES[c.saleQuality]||c.saleQuality)}</b></div>`:`<div class="empty">Sem preço de venda.</div>`}</div></div>`;
   if(scroll)$("details").scrollIntoView({behavior:"smooth",block:"start"});
 }
 function materialName(id){
