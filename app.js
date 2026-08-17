@@ -17,14 +17,43 @@ const norm = s => String(s??"").toLowerCase().normalize("NFD").replace(/[\u0300-
 // Ex.: T8_2H_DUALSWORD_LEVEL1 -> T8_2H_DUALSWORD@1
 function marketId(id){
   const s=String(id||"").trim();
-  if(!s) return "";
-  if(/@[0-4]$/.test(s)) return s;
-  const m=s.match(/^(.*)_LEVEL([0-4])$/i);
-  // LEVEL continua no item_id. Só acrescentamos @1/@2/@3/@4.
-  // Ex.: T4_CLOTH_LEVEL1 -> T4_CLOTH_LEVEL1@1
-  if(m) return m[1] + `_LEVEL${m[2]}` + (m[2] === "0" ? "" : `@${m[2]}`);
+  if(!s)return "";
+  // IDs já normalizados: T8_ITEM@1
+  if(/@[1-4]$/.test(s))return s;
+
+  // Materiais encantados: T8_METALBAR_LEVEL1 -> T8_METALBAR_LEVEL1@1
+  // NÃO removemos LEVEL1: ele faz parte do item_id do material.
+  const m=s.match(/^(.*)_LEVEL([1-4])$/i);
+  if(m)return `${m[1]}_LEVEL${m[2]}@${m[2]}`;
+
   return s;
 }
+
+function marketCandidates(id){
+  const s=String(id||"").trim();
+  if(!s)return [];
+
+  const out=new Set();
+  out.add(s);
+
+  // Item normal/encantado: T8_MAIN_SWORD -> T8_MAIN_SWORD@1
+  // Se já tiver @, mantemos.
+  if(!/@[1-4]$/.test(s)) {
+    out.add(`${s}@1`);
+    out.add(`${s}@2`);
+    out.add(`${s}@3`);
+    out.add(`${s}@4`);
+  }
+
+  // Material: T8_METALBAR_LEVEL1 -> T8_METALBAR_LEVEL1@1
+  const m=s.match(/^(.*)_LEVEL([1-4])$/i);
+  if(m){
+    out.add(`${m[1]}_LEVEL${m[2]}@${m[2]}`);
+  }
+
+  return [...out];
+}
+
 function itemIcon(id, quality=1, size=64){
   const realId=marketId(id);
   return realId ? `${IMAGE_API}${encodeURIComponent(realId)}.png?quality=${quality}&size=${size}` : "";
@@ -251,22 +280,12 @@ function priceFor(itemId,city,quality){
 }
 function cheapestMaterial(id,q){
   let best=null;
-  for(const city of CITIES){
-    const p=priceFor(id,city,q);
-    if(p && Number(p.sell)>0 && (!best || Number(p.sell)<best.price)){
-      best={city,price:Number(p.sell),quality:p.usedQuality,date:p.sellDate};
-    }
-  }
+  for(const city of CITIES){const p=priceFor(id,city,q);if(p&&(!best||p.sell<best.price))best={city,price:p.sell,quality:p.usedQuality,date:p.sellDate};}
   return best;
 }
 function bestSale(id,q){
   let best=null;
-  for(const city of CITIES){
-    const p=priceFor(id,city,q);
-    if(p && Number(p.sell)>0 && (!best || Number(p.sell)>best.price)){
-      best={city,price:Number(p.sell),quality:p.usedQuality,date:p.sellDate};
-    }
-  }
+  for(const city of CITIES){const p=priceFor(id,city,q);if(p&&(!best||p.sell>best.price))best={city,price:p.sell,quality:p.usedQuality,date:p.sellDate};}
   return best;
 }
 
@@ -336,9 +355,9 @@ function materialName(id){
 async function refreshPrices(){
   const ids=idsNeeded(wanted());if(!ids.length)return;
   $("status").textContent=`Preços: 0/${ids.length} itens consultados...`;prices=new Map();lastPriceDate=0;
-  const batches=[];for(let i=0;i<ids.length;i+=8)batches.push(ids.slice(i,i+8));
+  const batches=[];for(let i=0;i<ids.length;i+=10)batches.push(ids.slice(i,i+10));
   let cursor=0;
-  async function worker(){while(cursor<batches.length){const b=batches[cursor++];await getBatch(b);$("status").textContent=`Preços: ${Math.min(cursor*8,ids.length)}/${ids.length} itens consultados...`;renderRows();}}
+  async function worker(){while(cursor<batches.length){const b=batches[cursor++];await getBatch(b);$("status").textContent=`Preços: ${Math.min(cursor*10,ids.length)}/${ids.length} itens consultados...`;renderRows();}}
   await Promise.all(Array.from({length:Math.min(4,batches.length)},worker));
   $("status").textContent=`Preços concluídos para a seleção atual.`;renderRows();
 }
