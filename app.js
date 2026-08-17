@@ -17,42 +17,12 @@ const norm = s => String(s??"").toLowerCase().normalize("NFD").replace(/[\u0300-
 // Ex.: T8_2H_DUALSWORD_LEVEL1 -> T8_2H_DUALSWORD@1
 function marketId(id){
   const s=String(id||"").trim();
-  if(!s)return "";
-  // Mantém exatamente o ID do Albion. O encantamento é representado por @1..@4.
-  if(/@[1-4]$/.test(s)) return s;
-  const m=s.match(/^(.*)_LEVEL([1-4])$/i);
-  if(m){
-    // Materiais: T4_CLOTH_LEVEL1 -> T4_CLOTH_LEVEL1@1
-    return `${m[1]}_LEVEL${m[2]}@${m[2]}`;
-  }
+  if(!s) return "";
+  if(/@[0-4]$/.test(s)) return s;
+  const m=s.match(/^(.*)_LEVEL([0-4])$/i);
+  if(m) return m[1] + (m[2] === "0" ? "" : `@${m[2]}`);
   return s;
 }
-
-function marketCandidates(id){
-  const s=String(id||"").trim();
-  if(!s)return [];
-  const out=new Set();
-
-  // ID original: 4.0 / material base.
-  out.add(s);
-
-  // Equipamentos/itens encantados: T4_ITEM@1..@4
-  if(!/@[1-4]$/.test(s)){
-    for(let e=1;e<=4;e++) out.add(`${s}@${e}`);
-  }
-
-  // Materiais que trazem LEVEL no próprio ID.
-  const m=s.match(/^(.*)_LEVEL([1-4])$/i);
-  if(m){
-    const level=Number(m[2]);
-    out.add(`${m[1]}_LEVEL${level}@${level}`);
-    // Também aceitamos as variantes caso o dump tenha um formato diferente.
-    for(let e=1;e<=4;e++) out.add(`${m[1]}_LEVEL${level}@${e}`);
-  }
-
-  return [...out];
-}
-
 function itemIcon(id, quality=1, size=64){
   const realId=marketId(id);
   return realId ? `${IMAGE_API}${encodeURIComponent(realId)}.png?quality=${quality}&size=${size}` : "";
@@ -178,15 +148,32 @@ function deriveSubcategory(r){
 }
 
 function deriveTier(r){
+  const raw=r?.tier;
+  // Alguns dumps guardam o tier como 4.1/4.2/etc.
+  if(raw!==undefined && raw!==null && raw!==""){
+    const s=String(raw).trim().replace(/^T/i,"");
+    const m=s.match(/^([2-8])(?:\\.([0-4]))?$/);
+    if(m)return m[1];
+  }
   const id=String(r?.uniqueName||"");
   const m=id.match(/(?:^|_)T([2-8])(?:_|$)/i);
-  return m ? m[1] : String(r?.tier||"").replace(/^T/i,"");
+  return m ? m[1] : "";
 }
 function deriveEnchantment(r){
-  if(Number.isInteger(Number(r?.enchantment))) return Number(r.enchantment);
+  const raw=r?.enchantment;
+  if(raw!==undefined && raw!==null && raw!==""){
+    const n=Number(raw);
+    if(Number.isFinite(n) && n>=0 && n<=4)return Math.trunc(n);
+  }
+  // Se o próprio tier vier como 4.1, 4.2, etc.
+  const rawTier=String(r?.tier??"").trim().replace(/^T/i,"");
+  const tm=rawTier.match(/^[2-8]\\.([0-4])$/);
+  if(tm)return Number(tm[1]);
+
   const id=String(r?.uniqueName||"");
-  const m=id.match(/@([0-4])$/) || id.match(/LEVEL([0-4])$/i);
-  return m ? Number(m[1]) : 0;
+  const m=id.match(/@([0-4])$/);
+  if(m)return Number(m[1]);
+  return 0;
 }
 function normalizeRecipeMetadata(r){
   const out={...r};
@@ -202,7 +189,11 @@ function wanted(){
   const tier=$("tier")?.value||"", ench=$("enchant")?.value||"";
   if(activeCategory) list=list.filter(r=>r.category===activeCategory);
   if(activeSubcategory) list=list.filter(r=>r.subcategory===activeSubcategory);
-  if(tier) list=list.filter(r=>String(r.tier)===tier);
+
+  if(tier){
+    const m=tier.match(/^([2-8])\\.([0-4])$/);
+    if(m) list=list.filter(r=>String(r.tier)===m[1] && String(r.enchantment??0)===m[2]);
+  }
   if(ench!=="") list=list.filter(r=>String(r.enchantment??0)===ench);
   return list;
 }
@@ -215,7 +206,12 @@ function fillFilters(){
     activeCategory=b.dataset.cat; activeSubcategory=""; updateNav(); renderRows();
   });
   const tiers=[...new Set(recipes.map(r=>r.tier).filter(Boolean))].sort((a,b)=>Number(a)-Number(b));
-  $("tier").innerHTML=`<option value="">Todos os tiers</option>`+tiers.map(t=>`<option value="${esc(t)}">T${esc(t)}</option>`).join("");
+  const tierOptions=[];
+  for(const t of tiers){
+    for(let e=0;e<=4;e++) tierOptions.push({value:`${t}.${e}`,label:`T${t}.${e}`});
+  }
+  $("tier").innerHTML=`<option value="">Todos os tiers</option>`+
+    tierOptions.map(x=>`<option value="${x.value}">${x.label}</option>`).join("");
   updateNav();
 }
 function updateNav(){
@@ -230,10 +226,20 @@ function updateNav(){
 /* IDs de mercado: materiais encantados podem existir como @1..@4. */
 function marketCandidates(id){
   const original=String(id||"").trim();
-  if(!original) return [];
-  const real=marketId(original);
-  // O ID normalizado é o primeiro a ser consultado.
-  return [...new Set([real,original].filter(Boolean))];
+  if(!original)return [];
+  const out=new Set([original]);
+
+  // Equipamentos: consultar explicitamente 4.1/4.2/4.3/4.4.
+  if(!/@[1-4]$/.test(original)){
+    for(let e=1;e<=4;e++)out.add(`${original}@${e}`);
+  }
+
+  // Materiais com LEVEL: manter LEVEL e acrescentar o encantamento.
+  const m=original.match(/^(.*)_LEVEL([1-4])$/i);
+  if(m){
+    for(let e=1;e<=4;e++)out.add(`${m[1]}_LEVEL${m[2]}@${e}`);
+  }
+  return [...out];
 }
 function idsNeeded(list){
   const set=new Set();
@@ -244,39 +250,26 @@ function idsNeeded(list){
   return [...set];
 }
 function storePrice(itemId,row){
-  if(!row?.city || !itemId)return;
+  if(!row?.city)return;
   if(!prices.has(itemId))prices.set(itemId,new Map());
   prices.get(itemId).set(`${row.city}|${Number(row.quality)||1}`,{
-    sell:Number(row.sell_price_min)||0,
-    buy:Number(row.buy_price_max)||0,
-    quality:Number(row.quality)||1,
-    sellDate:row.sell_price_min_date||null,
-    buyDate:row.buy_price_max_date||null
+    sell:Number(row.sell_price_min)||0,buy:Number(row.buy_price_max)||0,quality:Number(row.quality)||1,
+    sellDate:row.sell_price_min_date||null,buyDate:row.buy_price_max_date||null
   });
-  const t1=row.sell_price_min_date?new Date(row.sell_price_min_date).getTime():0;
-  const t2=row.buy_price_max_date?new Date(row.buy_price_max_date).getTime():0;
-  if(Number.isFinite(t1))lastPriceDate=Math.max(lastPriceDate,t1);
-  if(Number.isFinite(t2))lastPriceDate=Math.max(lastPriceDate,t2);
+  const t=row.sell_price_min_date?new Date(row.sell_price_min_date).getTime():0;
+  if(Number.isFinite(t))lastPriceDate=Math.max(lastPriceDate,t);
 }
 async function getBatch(ids){
-  if(!ids.length)return 0;
+  if(!ids.length)return;
   const url=`${PRICE_API}${ids.map(encodeURIComponent).join(",")}.json?locations=${CITIES.map(encodeURIComponent).join(",")}&qualities=1,2,3,4,5`;
   for(let attempt=1;attempt<=3;attempt++){
     try{
       const res=await fetch(url,{cache:"no-store"});
       if(!res.ok)throw new Error(`HTTP ${res.status}`);
       const data=await res.json();
-      if(Array.isArray(data)){
-        data.forEach(r=>storePrice(String(r.item_id||""),r));
-        return data.length;
-      }
-      return 0;
-    }catch(e){
-      console.warn("Falha preços",e);
-      if(attempt<3)await new Promise(r=>setTimeout(r,700*attempt));
-    }
+      if(Array.isArray(data)){data.forEach(r=>storePrice(r.item_id,r));return;}
+    }catch(e){console.warn(e);if(attempt<3)await new Promise(r=>setTimeout(r,500*attempt));}
   }
-  return 0;
 }
 function priceFor(itemId,city,quality){
   for(const candidate of marketCandidates(itemId)){
@@ -367,9 +360,9 @@ function materialName(id){
 async function refreshPrices(){
   const ids=idsNeeded(wanted());if(!ids.length)return;
   $("status").textContent=`Preços: 0/${ids.length} itens consultados...`;prices=new Map();lastPriceDate=0;
-  const batches=[];for(let i=0;i<ids.length;i+=10)batches.push(ids.slice(i,i+10));
+  const batches=[];for(let i=0;i<ids.length;i+=8)batches.push(ids.slice(i,i+8));
   let cursor=0;
-  async function worker(){while(cursor<batches.length){const b=batches[cursor++];await getBatch(b);$("status").textContent=`Preços: ${Math.min(cursor*10,ids.length)}/${ids.length} itens consultados...`;renderRows();}}
+  async function worker(){while(cursor<batches.length){const b=batches[cursor++];await getBatch(b);$("status").textContent=`Preços: ${Math.min(cursor*8,ids.length)}/${ids.length} itens consultados...`;renderRows();}}
   await Promise.all(Array.from({length:Math.min(4,batches.length)},worker));
   $("status").textContent=`Preços concluídos para a seleção atual.`;renderRows();
 }
