@@ -13,8 +13,19 @@ const pct = n => Number.isFinite(Number(n)) ? Number(n).toFixed(1)+"%" : "—";
 const esc = s => String(s ?? "").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
 const norm = s => String(s??"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[_-]+/g," ");
 
+// Converte os IDs usados pelo catálogo de receitas para os IDs reais do mercado.
+// Ex.: T8_2H_DUALSWORD_LEVEL1 -> T8_2H_DUALSWORD@1
+function marketId(id){
+  const s=String(id||"").trim();
+  if(!s) return "";
+  if(/@[0-4]$/.test(s)) return s;
+  const m=s.match(/^(.*)_LEVEL([0-4])$/i);
+  if(m) return m[1] + (m[2] === "0" ? "" : `@${m[2]}`);
+  return s;
+}
 function itemIcon(id, quality=1, size=64){
-  return id ? `${IMAGE_API}${encodeURIComponent(String(id))}.png?quality=${quality}&size=${size}` : "";
+  const realId=marketId(id);
+  return realId ? `${IMAGE_API}${encodeURIComponent(realId)}.png?quality=${quality}&size=${size}` : "";
 }
 function iconHTML(id, quality=1, size=52, cls="item-icon"){
   if(!id) return "";
@@ -188,13 +199,11 @@ function updateNav(){
 
 /* IDs de mercado: materiais encantados podem existir como @1..@4. */
 function marketCandidates(id){
-  const s=String(id||"");
-  const out=[s];
-  if(!s.includes("@")){
-    const m=s.match(/LEVEL([1-4])$/i);
-    if(m) out.unshift(s.replace(/LEVEL[1-4]$/i,`LEVEL${m[1]}`)+"@"+m[1]);
-  }
-  return [...new Set(out)];
+  const original=String(id||"").trim();
+  if(!original) return [];
+  const real=marketId(original);
+  // O ID normalizado é o primeiro a ser consultado.
+  return [...new Set([real,original].filter(Boolean))];
 }
 function idsNeeded(list){
   const set=new Set();
