@@ -18,37 +18,36 @@ const norm = s => String(s??"").toLowerCase().normalize("NFD").replace(/[\u0300-
 function marketId(id){
   const s=String(id||"").trim();
   if(!s)return "";
-  // IDs já normalizados: T8_ITEM@1
-  if(/@[1-4]$/.test(s))return s;
-
-  // Materiais encantados: T8_METALBAR_LEVEL1 -> T8_METALBAR_LEVEL1@1
-  // NÃO removemos LEVEL1: ele faz parte do item_id do material.
+  // Mantém exatamente o ID do Albion. O encantamento é representado por @1..@4.
+  if(/@[1-4]$/.test(s)) return s;
   const m=s.match(/^(.*)_LEVEL([1-4])$/i);
-  if(m)return `${m[1]}_LEVEL${m[2]}@${m[2]}`;
-
+  if(m){
+    // Materiais: T4_CLOTH_LEVEL1 -> T4_CLOTH_LEVEL1@1
+    return `${m[1]}_LEVEL${m[2]}@${m[2]}`;
+  }
   return s;
 }
 
 function marketCandidates(id){
   const s=String(id||"").trim();
   if(!s)return [];
-
   const out=new Set();
+
+  // ID original: 4.0 / material base.
   out.add(s);
 
-  // Item normal/encantado: T8_MAIN_SWORD -> T8_MAIN_SWORD@1
-  // Se já tiver @, mantemos.
-  if(!/@[1-4]$/.test(s)) {
-    out.add(`${s}@1`);
-    out.add(`${s}@2`);
-    out.add(`${s}@3`);
-    out.add(`${s}@4`);
+  // Equipamentos/itens encantados: T4_ITEM@1..@4
+  if(!/@[1-4]$/.test(s)){
+    for(let e=1;e<=4;e++) out.add(`${s}@${e}`);
   }
 
-  // Material: T8_METALBAR_LEVEL1 -> T8_METALBAR_LEVEL1@1
+  // Materiais que trazem LEVEL no próprio ID.
   const m=s.match(/^(.*)_LEVEL([1-4])$/i);
   if(m){
-    out.add(`${m[1]}_LEVEL${m[2]}@${m[2]}`);
+    const level=Number(m[2]);
+    out.add(`${m[1]}_LEVEL${level}@${level}`);
+    // Também aceitamos as variantes caso o dump tenha um formato diferente.
+    for(let e=1;e<=4;e++) out.add(`${m[1]}_LEVEL${level}@${e}`);
   }
 
   return [...out];
@@ -245,26 +244,39 @@ function idsNeeded(list){
   return [...set];
 }
 function storePrice(itemId,row){
-  if(!row?.city)return;
+  if(!row?.city || !itemId)return;
   if(!prices.has(itemId))prices.set(itemId,new Map());
   prices.get(itemId).set(`${row.city}|${Number(row.quality)||1}`,{
-    sell:Number(row.sell_price_min)||0,buy:Number(row.buy_price_max)||0,quality:Number(row.quality)||1,
-    sellDate:row.sell_price_min_date||null,buyDate:row.buy_price_max_date||null
+    sell:Number(row.sell_price_min)||0,
+    buy:Number(row.buy_price_max)||0,
+    quality:Number(row.quality)||1,
+    sellDate:row.sell_price_min_date||null,
+    buyDate:row.buy_price_max_date||null
   });
-  const t=row.sell_price_min_date?new Date(row.sell_price_min_date).getTime():0;
-  if(Number.isFinite(t))lastPriceDate=Math.max(lastPriceDate,t);
+  const t1=row.sell_price_min_date?new Date(row.sell_price_min_date).getTime():0;
+  const t2=row.buy_price_max_date?new Date(row.buy_price_max_date).getTime():0;
+  if(Number.isFinite(t1))lastPriceDate=Math.max(lastPriceDate,t1);
+  if(Number.isFinite(t2))lastPriceDate=Math.max(lastPriceDate,t2);
 }
 async function getBatch(ids){
-  if(!ids.length)return;
+  if(!ids.length)return 0;
   const url=`${PRICE_API}${ids.map(encodeURIComponent).join(",")}.json?locations=${CITIES.map(encodeURIComponent).join(",")}&qualities=1,2,3,4,5`;
   for(let attempt=1;attempt<=3;attempt++){
     try{
       const res=await fetch(url,{cache:"no-store"});
       if(!res.ok)throw new Error(`HTTP ${res.status}`);
       const data=await res.json();
-      if(Array.isArray(data)){data.forEach(r=>storePrice(r.item_id,r));return;}
-    }catch(e){console.warn(e);if(attempt<3)await new Promise(r=>setTimeout(r,500*attempt));}
+      if(Array.isArray(data)){
+        data.forEach(r=>storePrice(String(r.item_id||""),r));
+        return data.length;
+      }
+      return 0;
+    }catch(e){
+      console.warn("Falha preços",e);
+      if(attempt<3)await new Promise(r=>setTimeout(r,700*attempt));
+    }
   }
+  return 0;
 }
 function priceFor(itemId,city,quality){
   for(const candidate of marketCandidates(itemId)){
