@@ -153,6 +153,20 @@
     "tier": 8,
     "enchantment": 0
   },
+  "T8_FARM_DRAKE_BABY": {
+    "name": "Firewing Drake Egg",
+    "category": "",
+    "subcategory": "",
+    "tier": 8,
+    "enchantment": 0
+  },
+  "T8_FARM_DRAKE_GROWN": {
+    "name": "Tame Firewing Drake",
+    "category": "",
+    "subcategory": "",
+    "tier": 8,
+    "enchantment": 0
+  },
   "T3_FARM_OX_BABY": {
     "name": "Journeyman's Ox Calf",
     "category": "",
@@ -1245,6 +1259,27 @@
     "tier": 7,
     "enchantment": 0
   },
+  "T3_FISH_FRESHWATER_DRAGON_AREA_RARE": {
+    "name": "Carefree Leyfin",
+    "category": "",
+    "subcategory": "",
+    "tier": 3,
+    "enchantment": 0
+  },
+  "T5_FISH_FRESHWATER_DRAGON_AREA_RARE": {
+    "name": "Brightsoul Leyfin",
+    "category": "",
+    "subcategory": "",
+    "tier": 5,
+    "enchantment": 0
+  },
+  "T7_FISH_FRESHWATER_DRAGON_AREA_RARE": {
+    "name": "Dragonbound Leyfin",
+    "category": "",
+    "subcategory": "",
+    "tier": 7,
+    "enchantment": 0
+  },
   "T1_SEAWEED": {
     "name": "Seaweed",
     "category": "",
@@ -1751,6 +1786,27 @@
   },
   "QUESTITEM_STANDING_SMUGGLER": {
     "name": "Buy a round",
+    "category": "",
+    "subcategory": "",
+    "tier": null,
+    "enchantment": 0
+  },
+  "QUESTITEM_TOKEN_DRAGONS": {
+    "name": "Ancient Ritual Bone",
+    "category": "",
+    "subcategory": "",
+    "tier": null,
+    "enchantment": 0
+  },
+  "QUESTITEM_STANDING_DRAGONS": {
+    "name": "Lesser Offering",
+    "category": "",
+    "subcategory": "",
+    "tier": null,
+    "enchantment": 0
+  },
+  "QUESTITEM_STANDING_DRAGONS_STRONG": {
+    "name": "Greater Offering",
     "category": "",
     "subcategory": "",
     "tier": null,
@@ -4822,6 +4878,90 @@
     "tier": 8,
     "enchantment": 0
   },
+  "T4_POTION_LIFEWARD": {
+    "name": "Minor Lifeward Potion",
+    "category": "",
+    "subcategory": "",
+    "tier": 4,
+    "enchantment": 0
+  },
+  "T4_POTION_LIFEWARD@1": {
+    "name": "Minor Lifeward Potion",
+    "category": "",
+    "subcategory": "",
+    "tier": 4,
+    "enchantment": 0
+  },
+  "T4_POTION_LIFEWARD@2": {
+    "name": "Minor Lifeward Potion",
+    "category": "",
+    "subcategory": "",
+    "tier": 4,
+    "enchantment": 0
+  },
+  "T4_POTION_LIFEWARD@3": {
+    "name": "Minor Lifeward Potion",
+    "category": "",
+    "subcategory": "",
+    "tier": 4,
+    "enchantment": 0
+  },
+  "T6_POTION_LIFEWARD": {
+    "name": "Lifeward Potion",
+    "category": "",
+    "subcategory": "",
+    "tier": 6,
+    "enchantment": 0
+  },
+  "T6_POTION_LIFEWARD@1": {
+    "name": "Lifeward Potion",
+    "category": "",
+    "subcategory": "",
+    "tier": 6,
+    "enchantment": 0
+  },
+  "T6_POTION_LIFEWARD@2": {
+    "name": "Lifeward Potion",
+    "category": "",
+    "subcategory": "",
+    "tier": 6,
+    "enchantment": 0
+  },
+  "T6_POTION_LIFEWARD@3": {
+    "name": "Lifeward Potion",
+    "category": "",
+    "subcategory": "",
+    "tier": 6,
+    "enchantment": 0
+  },
+  "T8_POTION_LIFEWARD": {
+    "name": "Major Lifeward Potion",
+    "category": "",
+    "subcategory": "",
+    "tier": 8,
+    "enchantment": 0
+  },
+  "T8_POTION_LIFEWARD@1": {
+    "name": "Major Lifeward Potion",
+    "category": "",
+    "subcategory": "",
+    "tier": 8,
+    "enchantment": 0
+  },
+  "T8_POTION_LIFEWARD@2": {
+    "name": "Major Lifeward Potion",
+    "category": "",
+    "subcategory": "",
+    "tier": 8,
+    "enchantment": 0
+  },
+  "T8_POTION_LIFEWARD@3": {
+    "name": "Major Lifeward Potion",
+    "category": "",
+    "subcategory": "",
+    "tier": 8,
+    "enchantment": 0
+  },
   "T1_WORM": {
     "name": "Earthworm",
     "category": "",
@@ -5620,6 +5760,90 @@
     "tier": 7,
     "enchantment": 0
   },
+  "T3_MEAL_OMELETTE_DRAGONAREA": {
+    "name": "Carefree Leyfin Omelette",
+    "category": "",
+    "subcategory": "",
+    "tier": 3,
+    "enchantment": 0
+  },
+  "T3_MEAL_OMELETTE_DRAGONAREA@1": {
+    "name": "Carefree Leyfin Omelette",
+    "category": "",
+    "subcategory": "",
+    "tier": 3,
+    "enchantment": 0
+  },
+  "T3_MEAL_OMELETTE_DRAGONAREA@2": {
+    "name": "Carefree Leyfin Omelette",
+    "category": "",
+    "subcategory": "",
+    "tier": 3,
+    "enchantment": 0
+  },
+  "T3_MEAL_OMELETTE_DRAGONAREA@3": {
+    "name": "Carefree Leyfin Omelette",
+    "category": "",
+    "subcategory": "",
+    "tier": 3,
+    "enchantment": 0
+  },
+  "T5_MEAL_OMELETTE_DRAGONAREA": {
+    "name": "Brightsoul Leyfin Omelette",
+    "category": "",
+    "subcategory": "",
+    "tier": 5,
+    "enchantment": 0
+  },
+  "T5_MEAL_OMELETTE_DRAGONAREA@1": {
+    "name": "Brightsoul Leyfin Omelette",
+    "category": "",
+    "subcategory": "",
+    "tier": 5,
+    "enchantment": 0
+  },
+  "T5_MEAL_OMELETTE_DRAGONAREA@2": {
+    "name": "Brightsoul Leyfin Omelette",
+    "category": "",
+    "subcategory": "",
+    "tier": 5,
+    "enchantment": 0
+  },
+  "T5_MEAL_OMELETTE_DRAGONAREA@3": {
+    "name": "Brightsoul Leyfin Omelette",
+    "category": "",
+    "subcategory": "",
+    "tier": 5,
+    "enchantment": 0
+  },
+  "T7_MEAL_OMELETTE_DRAGONAREA": {
+    "name": "Dragonbound Leyfin Omelette",
+    "category": "",
+    "subcategory": "",
+    "tier": 7,
+    "enchantment": 0
+  },
+  "T7_MEAL_OMELETTE_DRAGONAREA@1": {
+    "name": "Dragonbound Leyfin Omelette",
+    "category": "",
+    "subcategory": "",
+    "tier": 7,
+    "enchantment": 0
+  },
+  "T7_MEAL_OMELETTE_DRAGONAREA@2": {
+    "name": "Dragonbound Leyfin Omelette",
+    "category": "",
+    "subcategory": "",
+    "tier": 7,
+    "enchantment": 0
+  },
+  "T7_MEAL_OMELETTE_DRAGONAREA@3": {
+    "name": "Dragonbound Leyfin Omelette",
+    "category": "",
+    "subcategory": "",
+    "tier": 7,
+    "enchantment": 0
+  },
   "T4_MEAL_STEW": {
     "name": "Goat Stew",
     "category": "",
@@ -6290,6 +6514,13 @@
     "category": "",
     "subcategory": "",
     "tier": 7,
+    "enchantment": 0
+  },
+  "T8_MEAL_SPECIAL_FOOD_DRAKE_EGG": {
+    "name": "Drake Egg Biscuits",
+    "category": "",
+    "subcategory": "",
+    "tier": 8,
     "enchantment": 0
   },
   "T3_MEAT": {
@@ -12816,6 +13047,111 @@
     "tier": 8,
     "enchantment": 0
   },
+  "T4_ARTEFACT_ARMOR_LEATHER_DRAGON": {
+    "name": "Adept's Dragonhide Padding",
+    "category": "",
+    "subcategory": "",
+    "tier": 4,
+    "enchantment": 0
+  },
+  "T5_ARTEFACT_ARMOR_LEATHER_DRAGON": {
+    "name": "Expert's Dragonhide Padding",
+    "category": "",
+    "subcategory": "",
+    "tier": 5,
+    "enchantment": 0
+  },
+  "T6_ARTEFACT_ARMOR_LEATHER_DRAGON": {
+    "name": "Master's Dragonhide Padding",
+    "category": "",
+    "subcategory": "",
+    "tier": 6,
+    "enchantment": 0
+  },
+  "T7_ARTEFACT_ARMOR_LEATHER_DRAGON": {
+    "name": "Grandmaster's Dragonhide Padding",
+    "category": "",
+    "subcategory": "",
+    "tier": 7,
+    "enchantment": 0
+  },
+  "T8_ARTEFACT_ARMOR_LEATHER_DRAGON": {
+    "name": "Elder's Dragonhide Padding",
+    "category": "",
+    "subcategory": "",
+    "tier": 8,
+    "enchantment": 0
+  },
+  "T4_ARTEFACT_HEAD_LEATHER_DRAGON": {
+    "name": "Adept's Dragonhide Crown",
+    "category": "",
+    "subcategory": "",
+    "tier": 4,
+    "enchantment": 0
+  },
+  "T5_ARTEFACT_HEAD_LEATHER_DRAGON": {
+    "name": "Expert's Dragonhide Crown",
+    "category": "",
+    "subcategory": "",
+    "tier": 5,
+    "enchantment": 0
+  },
+  "T6_ARTEFACT_HEAD_LEATHER_DRAGON": {
+    "name": "Master's Dragonhide Crown",
+    "category": "",
+    "subcategory": "",
+    "tier": 6,
+    "enchantment": 0
+  },
+  "T7_ARTEFACT_HEAD_LEATHER_DRAGON": {
+    "name": "Grandmaster's Dragonhide Crown",
+    "category": "",
+    "subcategory": "",
+    "tier": 7,
+    "enchantment": 0
+  },
+  "T8_ARTEFACT_HEAD_LEATHER_DRAGON": {
+    "name": "Elder's Dragonhide Crown",
+    "category": "",
+    "subcategory": "",
+    "tier": 8,
+    "enchantment": 0
+  },
+  "T4_ARTEFACT_SHOES_LEATHER_DRAGON": {
+    "name": "Adept's Dragonhide Trim",
+    "category": "",
+    "subcategory": "",
+    "tier": 4,
+    "enchantment": 0
+  },
+  "T5_ARTEFACT_SHOES_LEATHER_DRAGON": {
+    "name": "Expert's Dragonhide Trim",
+    "category": "",
+    "subcategory": "",
+    "tier": 5,
+    "enchantment": 0
+  },
+  "T6_ARTEFACT_SHOES_LEATHER_DRAGON": {
+    "name": "Master's Dragonhide Trim",
+    "category": "",
+    "subcategory": "",
+    "tier": 6,
+    "enchantment": 0
+  },
+  "T7_ARTEFACT_SHOES_LEATHER_DRAGON": {
+    "name": "Grandmaster's Dragonhide Trim",
+    "category": "",
+    "subcategory": "",
+    "tier": 7,
+    "enchantment": 0
+  },
+  "T8_ARTEFACT_SHOES_LEATHER_DRAGON": {
+    "name": "Elder's Dragonhide Trim",
+    "category": "",
+    "subcategory": "",
+    "tier": 8,
+    "enchantment": 0
+  },
   "T4_ARTEFACT_HEAD_CLOTH_KEEPER": {
     "name": "Adept's Druidic Preserved Beak",
     "category": "",
@@ -13635,6 +13971,27 @@
     "tier": 1,
     "enchantment": 0
   },
+  "T4_ALCHEMY_RARE_DRAGONAREA": {
+    "name": "Diluted Dragon Blood",
+    "category": "",
+    "subcategory": "",
+    "tier": 4,
+    "enchantment": 0
+  },
+  "T6_ALCHEMY_RARE_DRAGONAREA": {
+    "name": "Dragon Blood",
+    "category": "",
+    "subcategory": "",
+    "tier": 6,
+    "enchantment": 0
+  },
+  "T8_ALCHEMY_RARE_DRAGONAREA": {
+    "name": "Potent Dragon Blood",
+    "category": "",
+    "subcategory": "",
+    "tier": 8,
+    "enchantment": 0
+  },
   "T1_ALCHEMY_EXTRACT_LEVEL1": {
     "name": "Basic Arcane Extract",
     "category": "",
@@ -13705,6 +14062,13 @@
     "tier": 4,
     "enchantment": 0
   },
+  "T4_SHARD_FIRE_DRAGON": {
+    "name": "Adept's Fire Dragon Scales",
+    "category": "",
+    "subcategory": "",
+    "tier": 4,
+    "enchantment": 0
+  },
   "T5_ESSENCE_POTION": {
     "name": "Expert's Arcane Essence",
     "category": "",
@@ -13749,6 +14113,13 @@
   },
   "T5_SHARD_CRYSTAL": {
     "name": "Expert's Crystal Shard",
+    "category": "",
+    "subcategory": "",
+    "tier": 5,
+    "enchantment": 0
+  },
+  "T5_SHARD_FIRE_DRAGON": {
+    "name": "Expert's Fire Dragon Scales",
     "category": "",
     "subcategory": "",
     "tier": 5,
@@ -13803,6 +14174,13 @@
     "tier": 6,
     "enchantment": 0
   },
+  "T6_SHARD_FIRE_DRAGON": {
+    "name": "Master's Fire Dragon Scales",
+    "category": "",
+    "subcategory": "",
+    "tier": 6,
+    "enchantment": 0
+  },
   "T7_ESSENCE_POTION": {
     "name": "Grandmaster's Arcane Essence",
     "category": "",
@@ -13852,6 +14230,13 @@
     "tier": 7,
     "enchantment": 0
   },
+  "T7_SHARD_FIRE_DRAGON": {
+    "name": "Grandmaster's Fire Dragon Scales",
+    "category": "",
+    "subcategory": "",
+    "tier": 7,
+    "enchantment": 0
+  },
   "T8_ESSENCE_POTION": {
     "name": "Elder's Arcane Essence",
     "category": "",
@@ -13896,6 +14281,13 @@
   },
   "T8_SHARD_CRYSTAL": {
     "name": "Elder's Crystal Shard",
+    "category": "",
+    "subcategory": "",
+    "tier": 8,
+    "enchantment": 0
+  },
+  "T8_SHARD_FIRE_DRAGON": {
+    "name": "Elder's Fire Dragon Scales",
     "category": "",
     "subcategory": "",
     "tier": 8,
@@ -21069,6 +21461,13 @@
     "tier": 8,
     "enchantment": 0
   },
+  "T8_MOUNT_DRAKE_FIRE": {
+    "name": "Firewing Drake",
+    "category": "",
+    "subcategory": "",
+    "tier": 8,
+    "enchantment": 0
+  },
   "T8_MOUNT_MAMMOTH_BATTLE@1": {
     "name": "Elder's Command Mammoth",
     "category": "",
@@ -21519,13 +21918,6 @@
   },
   "UNIQUE_MOUNT_TANKBEETLE_SILVER": {
     "name": "Silver Phalanx Beetle",
-    "category": "",
-    "subcategory": "",
-    "tier": null,
-    "enchantment": 0
-  },
-  "UNIQUE_MOUNT_DRAKE": {
-    "name": "",
     "category": "",
     "subcategory": "",
     "tier": null,
@@ -32201,6 +32593,531 @@
   },
   "T8_SHOES_LEATHER_AVALON@4": {
     "name": "Elder's Shoes of Tenacity",
+    "category": "",
+    "subcategory": "",
+    "tier": 8,
+    "enchantment": 0
+  },
+  "T4_HEAD_LEATHER_DRAGON": {
+    "name": "Adept's Dragonslayer Hood",
+    "category": "",
+    "subcategory": "",
+    "tier": 4,
+    "enchantment": 0
+  },
+  "T4_HEAD_LEATHER_DRAGON@1": {
+    "name": "Adept's Dragonslayer Hood",
+    "category": "",
+    "subcategory": "",
+    "tier": 4,
+    "enchantment": 0
+  },
+  "T4_HEAD_LEATHER_DRAGON@2": {
+    "name": "Adept's Dragonslayer Hood",
+    "category": "",
+    "subcategory": "",
+    "tier": 4,
+    "enchantment": 0
+  },
+  "T4_HEAD_LEATHER_DRAGON@3": {
+    "name": "Adept's Dragonslayer Hood",
+    "category": "",
+    "subcategory": "",
+    "tier": 4,
+    "enchantment": 0
+  },
+  "T4_HEAD_LEATHER_DRAGON@4": {
+    "name": "Adept's Dragonslayer Hood",
+    "category": "",
+    "subcategory": "",
+    "tier": 4,
+    "enchantment": 0
+  },
+  "T5_HEAD_LEATHER_DRAGON": {
+    "name": "Expert's Dragonslayer Hood",
+    "category": "",
+    "subcategory": "",
+    "tier": 5,
+    "enchantment": 0
+  },
+  "T5_HEAD_LEATHER_DRAGON@1": {
+    "name": "Expert's Dragonslayer Hood",
+    "category": "",
+    "subcategory": "",
+    "tier": 5,
+    "enchantment": 0
+  },
+  "T5_HEAD_LEATHER_DRAGON@2": {
+    "name": "Expert's Dragonslayer Hood",
+    "category": "",
+    "subcategory": "",
+    "tier": 5,
+    "enchantment": 0
+  },
+  "T5_HEAD_LEATHER_DRAGON@3": {
+    "name": "Expert's Dragonslayer Hood",
+    "category": "",
+    "subcategory": "",
+    "tier": 5,
+    "enchantment": 0
+  },
+  "T5_HEAD_LEATHER_DRAGON@4": {
+    "name": "Expert's Dragonslayer Hood",
+    "category": "",
+    "subcategory": "",
+    "tier": 5,
+    "enchantment": 0
+  },
+  "T6_HEAD_LEATHER_DRAGON": {
+    "name": "Master's Dragonslayer Hood",
+    "category": "",
+    "subcategory": "",
+    "tier": 6,
+    "enchantment": 0
+  },
+  "T6_HEAD_LEATHER_DRAGON@1": {
+    "name": "Master's Dragonslayer Hood",
+    "category": "",
+    "subcategory": "",
+    "tier": 6,
+    "enchantment": 0
+  },
+  "T6_HEAD_LEATHER_DRAGON@2": {
+    "name": "Master's Dragonslayer Hood",
+    "category": "",
+    "subcategory": "",
+    "tier": 6,
+    "enchantment": 0
+  },
+  "T6_HEAD_LEATHER_DRAGON@3": {
+    "name": "Master's Dragonslayer Hood",
+    "category": "",
+    "subcategory": "",
+    "tier": 6,
+    "enchantment": 0
+  },
+  "T6_HEAD_LEATHER_DRAGON@4": {
+    "name": "Master's Dragonslayer Hood",
+    "category": "",
+    "subcategory": "",
+    "tier": 6,
+    "enchantment": 0
+  },
+  "T7_HEAD_LEATHER_DRAGON": {
+    "name": "Grandmaster's Dragonslayer Hood",
+    "category": "",
+    "subcategory": "",
+    "tier": 7,
+    "enchantment": 0
+  },
+  "T7_HEAD_LEATHER_DRAGON@1": {
+    "name": "Grandmaster's Dragonslayer Hood",
+    "category": "",
+    "subcategory": "",
+    "tier": 7,
+    "enchantment": 0
+  },
+  "T7_HEAD_LEATHER_DRAGON@2": {
+    "name": "Grandmaster's Dragonslayer Hood",
+    "category": "",
+    "subcategory": "",
+    "tier": 7,
+    "enchantment": 0
+  },
+  "T7_HEAD_LEATHER_DRAGON@3": {
+    "name": "Grandmaster's Dragonslayer Hood",
+    "category": "",
+    "subcategory": "",
+    "tier": 7,
+    "enchantment": 0
+  },
+  "T7_HEAD_LEATHER_DRAGON@4": {
+    "name": "Grandmaster's Dragonslayer Hood",
+    "category": "",
+    "subcategory": "",
+    "tier": 7,
+    "enchantment": 0
+  },
+  "T8_HEAD_LEATHER_DRAGON": {
+    "name": "Elder's Dragonslayer Hood",
+    "category": "",
+    "subcategory": "",
+    "tier": 8,
+    "enchantment": 0
+  },
+  "T8_HEAD_LEATHER_DRAGON@1": {
+    "name": "Elder's Dragonslayer Hood",
+    "category": "",
+    "subcategory": "",
+    "tier": 8,
+    "enchantment": 0
+  },
+  "T8_HEAD_LEATHER_DRAGON@2": {
+    "name": "Elder's Dragonslayer Hood",
+    "category": "",
+    "subcategory": "",
+    "tier": 8,
+    "enchantment": 0
+  },
+  "T8_HEAD_LEATHER_DRAGON@3": {
+    "name": "Elder's Dragonslayer Hood",
+    "category": "",
+    "subcategory": "",
+    "tier": 8,
+    "enchantment": 0
+  },
+  "T8_HEAD_LEATHER_DRAGON@4": {
+    "name": "Elder's Dragonslayer Hood",
+    "category": "",
+    "subcategory": "",
+    "tier": 8,
+    "enchantment": 0
+  },
+  "T4_ARMOR_LEATHER_DRAGON": {
+    "name": "Adept's Dragonslayer Jacket",
+    "category": "",
+    "subcategory": "",
+    "tier": 4,
+    "enchantment": 0
+  },
+  "T4_ARMOR_LEATHER_DRAGON@1": {
+    "name": "Adept's Dragonslayer Jacket",
+    "category": "",
+    "subcategory": "",
+    "tier": 4,
+    "enchantment": 0
+  },
+  "T4_ARMOR_LEATHER_DRAGON@2": {
+    "name": "Adept's Dragonslayer Jacket",
+    "category": "",
+    "subcategory": "",
+    "tier": 4,
+    "enchantment": 0
+  },
+  "T4_ARMOR_LEATHER_DRAGON@3": {
+    "name": "Adept's Dragonslayer Jacket",
+    "category": "",
+    "subcategory": "",
+    "tier": 4,
+    "enchantment": 0
+  },
+  "T4_ARMOR_LEATHER_DRAGON@4": {
+    "name": "Adept's Dragonslayer Jacket",
+    "category": "",
+    "subcategory": "",
+    "tier": 4,
+    "enchantment": 0
+  },
+  "T5_ARMOR_LEATHER_DRAGON": {
+    "name": "Expert's Dragonslayer Jacket",
+    "category": "",
+    "subcategory": "",
+    "tier": 5,
+    "enchantment": 0
+  },
+  "T5_ARMOR_LEATHER_DRAGON@1": {
+    "name": "Expert's Dragonslayer Jacket",
+    "category": "",
+    "subcategory": "",
+    "tier": 5,
+    "enchantment": 0
+  },
+  "T5_ARMOR_LEATHER_DRAGON@2": {
+    "name": "Expert's Dragonslayer Jacket",
+    "category": "",
+    "subcategory": "",
+    "tier": 5,
+    "enchantment": 0
+  },
+  "T5_ARMOR_LEATHER_DRAGON@3": {
+    "name": "Expert's Dragonslayer Jacket",
+    "category": "",
+    "subcategory": "",
+    "tier": 5,
+    "enchantment": 0
+  },
+  "T5_ARMOR_LEATHER_DRAGON@4": {
+    "name": "Expert's Dragonslayer Jacket",
+    "category": "",
+    "subcategory": "",
+    "tier": 5,
+    "enchantment": 0
+  },
+  "T6_ARMOR_LEATHER_DRAGON": {
+    "name": "Master's Dragonslayer Jacket",
+    "category": "",
+    "subcategory": "",
+    "tier": 6,
+    "enchantment": 0
+  },
+  "T6_ARMOR_LEATHER_DRAGON@1": {
+    "name": "Master's Dragonslayer Jacket",
+    "category": "",
+    "subcategory": "",
+    "tier": 6,
+    "enchantment": 0
+  },
+  "T6_ARMOR_LEATHER_DRAGON@2": {
+    "name": "Master's Dragonslayer Jacket",
+    "category": "",
+    "subcategory": "",
+    "tier": 6,
+    "enchantment": 0
+  },
+  "T6_ARMOR_LEATHER_DRAGON@3": {
+    "name": "Master's Dragonslayer Jacket",
+    "category": "",
+    "subcategory": "",
+    "tier": 6,
+    "enchantment": 0
+  },
+  "T6_ARMOR_LEATHER_DRAGON@4": {
+    "name": "Master's Dragonslayer Jacket",
+    "category": "",
+    "subcategory": "",
+    "tier": 6,
+    "enchantment": 0
+  },
+  "T7_ARMOR_LEATHER_DRAGON": {
+    "name": "Grandmaster's Dragonslayer Jacket",
+    "category": "",
+    "subcategory": "",
+    "tier": 7,
+    "enchantment": 0
+  },
+  "T7_ARMOR_LEATHER_DRAGON@1": {
+    "name": "Grandmaster's Dragonslayer Jacket",
+    "category": "",
+    "subcategory": "",
+    "tier": 7,
+    "enchantment": 0
+  },
+  "T7_ARMOR_LEATHER_DRAGON@2": {
+    "name": "Grandmaster's Dragonslayer Jacket",
+    "category": "",
+    "subcategory": "",
+    "tier": 7,
+    "enchantment": 0
+  },
+  "T7_ARMOR_LEATHER_DRAGON@3": {
+    "name": "Grandmaster's Dragonslayer Jacket",
+    "category": "",
+    "subcategory": "",
+    "tier": 7,
+    "enchantment": 0
+  },
+  "T7_ARMOR_LEATHER_DRAGON@4": {
+    "name": "Grandmaster's Dragonslayer Jacket",
+    "category": "",
+    "subcategory": "",
+    "tier": 7,
+    "enchantment": 0
+  },
+  "T8_ARMOR_LEATHER_DRAGON": {
+    "name": "Elder's Dragonslayer Jacket",
+    "category": "",
+    "subcategory": "",
+    "tier": 8,
+    "enchantment": 0
+  },
+  "T8_ARMOR_LEATHER_DRAGON@1": {
+    "name": "Elder's Dragonslayer Jacket",
+    "category": "",
+    "subcategory": "",
+    "tier": 8,
+    "enchantment": 0
+  },
+  "T8_ARMOR_LEATHER_DRAGON@2": {
+    "name": "Elder's Dragonslayer Jacket",
+    "category": "",
+    "subcategory": "",
+    "tier": 8,
+    "enchantment": 0
+  },
+  "T8_ARMOR_LEATHER_DRAGON@3": {
+    "name": "Elder's Dragonslayer Jacket",
+    "category": "",
+    "subcategory": "",
+    "tier": 8,
+    "enchantment": 0
+  },
+  "T8_ARMOR_LEATHER_DRAGON@4": {
+    "name": "Elder's Dragonslayer Jacket",
+    "category": "",
+    "subcategory": "",
+    "tier": 8,
+    "enchantment": 0
+  },
+  "T4_SHOES_LEATHER_DRAGON": {
+    "name": "Adept's Dragonslayer Shoes",
+    "category": "",
+    "subcategory": "",
+    "tier": 4,
+    "enchantment": 0
+  },
+  "T4_SHOES_LEATHER_DRAGON@1": {
+    "name": "Adept's Dragonslayer Shoes",
+    "category": "",
+    "subcategory": "",
+    "tier": 4,
+    "enchantment": 0
+  },
+  "T4_SHOES_LEATHER_DRAGON@2": {
+    "name": "Adept's Dragonslayer Shoes",
+    "category": "",
+    "subcategory": "",
+    "tier": 4,
+    "enchantment": 0
+  },
+  "T4_SHOES_LEATHER_DRAGON@3": {
+    "name": "Adept's Dragonslayer Shoes",
+    "category": "",
+    "subcategory": "",
+    "tier": 4,
+    "enchantment": 0
+  },
+  "T4_SHOES_LEATHER_DRAGON@4": {
+    "name": "Adept's Dragonslayer Shoes",
+    "category": "",
+    "subcategory": "",
+    "tier": 4,
+    "enchantment": 0
+  },
+  "T5_SHOES_LEATHER_DRAGON": {
+    "name": "Expert's Dragonslayer Shoes",
+    "category": "",
+    "subcategory": "",
+    "tier": 5,
+    "enchantment": 0
+  },
+  "T5_SHOES_LEATHER_DRAGON@1": {
+    "name": "Expert's Dragonslayer Shoes",
+    "category": "",
+    "subcategory": "",
+    "tier": 5,
+    "enchantment": 0
+  },
+  "T5_SHOES_LEATHER_DRAGON@2": {
+    "name": "Expert's Dragonslayer Shoes",
+    "category": "",
+    "subcategory": "",
+    "tier": 5,
+    "enchantment": 0
+  },
+  "T5_SHOES_LEATHER_DRAGON@3": {
+    "name": "Expert's Dragonslayer Shoes",
+    "category": "",
+    "subcategory": "",
+    "tier": 5,
+    "enchantment": 0
+  },
+  "T5_SHOES_LEATHER_DRAGON@4": {
+    "name": "Expert's Dragonslayer Shoes",
+    "category": "",
+    "subcategory": "",
+    "tier": 5,
+    "enchantment": 0
+  },
+  "T6_SHOES_LEATHER_DRAGON": {
+    "name": "Master's Dragonslayer Shoes",
+    "category": "",
+    "subcategory": "",
+    "tier": 6,
+    "enchantment": 0
+  },
+  "T6_SHOES_LEATHER_DRAGON@1": {
+    "name": "Master's Dragonslayer Shoes",
+    "category": "",
+    "subcategory": "",
+    "tier": 6,
+    "enchantment": 0
+  },
+  "T6_SHOES_LEATHER_DRAGON@2": {
+    "name": "Master's Dragonslayer Shoes",
+    "category": "",
+    "subcategory": "",
+    "tier": 6,
+    "enchantment": 0
+  },
+  "T6_SHOES_LEATHER_DRAGON@3": {
+    "name": "Master's Dragonslayer Shoes",
+    "category": "",
+    "subcategory": "",
+    "tier": 6,
+    "enchantment": 0
+  },
+  "T6_SHOES_LEATHER_DRAGON@4": {
+    "name": "Master's Dragonslayer Shoes",
+    "category": "",
+    "subcategory": "",
+    "tier": 6,
+    "enchantment": 0
+  },
+  "T7_SHOES_LEATHER_DRAGON": {
+    "name": "Grandmaster's Dragonslayer Shoes",
+    "category": "",
+    "subcategory": "",
+    "tier": 7,
+    "enchantment": 0
+  },
+  "T7_SHOES_LEATHER_DRAGON@1": {
+    "name": "Grandmaster's Dragonslayer Shoes",
+    "category": "",
+    "subcategory": "",
+    "tier": 7,
+    "enchantment": 0
+  },
+  "T7_SHOES_LEATHER_DRAGON@2": {
+    "name": "Grandmaster's Dragonslayer Shoes",
+    "category": "",
+    "subcategory": "",
+    "tier": 7,
+    "enchantment": 0
+  },
+  "T7_SHOES_LEATHER_DRAGON@3": {
+    "name": "Grandmaster's Dragonslayer Shoes",
+    "category": "",
+    "subcategory": "",
+    "tier": 7,
+    "enchantment": 0
+  },
+  "T7_SHOES_LEATHER_DRAGON@4": {
+    "name": "Grandmaster's Dragonslayer Shoes",
+    "category": "",
+    "subcategory": "",
+    "tier": 7,
+    "enchantment": 0
+  },
+  "T8_SHOES_LEATHER_DRAGON": {
+    "name": "Elder's Dragonslayer Shoes",
+    "category": "",
+    "subcategory": "",
+    "tier": 8,
+    "enchantment": 0
+  },
+  "T8_SHOES_LEATHER_DRAGON@1": {
+    "name": "Elder's Dragonslayer Shoes",
+    "category": "",
+    "subcategory": "",
+    "tier": 8,
+    "enchantment": 0
+  },
+  "T8_SHOES_LEATHER_DRAGON@2": {
+    "name": "Elder's Dragonslayer Shoes",
+    "category": "",
+    "subcategory": "",
+    "tier": 8,
+    "enchantment": 0
+  },
+  "T8_SHOES_LEATHER_DRAGON@3": {
+    "name": "Elder's Dragonslayer Shoes",
+    "category": "",
+    "subcategory": "",
+    "tier": 8,
+    "enchantment": 0
+  },
+  "T8_SHOES_LEATHER_DRAGON@4": {
+    "name": "Elder's Dragonslayer Shoes",
     "category": "",
     "subcategory": "",
     "tier": 8,
@@ -73156,6 +74073,20 @@
     "tier": null,
     "enchantment": 0
   },
+  "UNIQUE_AVATARRING_DRAGON_FACTION": {
+    "name": "Avatar Ring: Ancient Mystic",
+    "category": "",
+    "subcategory": "",
+    "tier": null,
+    "enchantment": 0
+  },
+  "UNIQUE_AVATAR_DRAGON_FACTION": {
+    "name": "Avatar: Ancient Mystic",
+    "category": "",
+    "subcategory": "",
+    "tier": null,
+    "enchantment": 0
+  },
   "UNIQUE_AVATAR_GVGSEASON_04": {
     "name": "Avatar: Guild Season 4",
     "category": "",
@@ -73774,6 +74705,20 @@
   },
   "UNIQUE_AVATAR_GVGSEASON_34_SILVER": {
     "name": "Avatar: Silver Flameward",
+    "category": "",
+    "subcategory": "",
+    "tier": null,
+    "enchantment": 0
+  },
+  "UNIQUE_AVATAR_GVGSEASON_35_CRYSTAL": {
+    "name": "",
+    "category": "",
+    "subcategory": "",
+    "tier": null,
+    "enchantment": 0
+  },
+  "UNIQUE_AVATAR_GVGSEASON_35_SILVER": {
+    "name": "",
     "category": "",
     "subcategory": "",
     "tier": null,
@@ -75088,11 +76033,109 @@
     "tier": 8,
     "enchantment": 0
   },
-  "T6_RANDOM_DUNGEON_ELITE_DRAGON_TEST_TOKEN": {
+  "T6_SHARD_RANDOM_DUNGEON_ELITE_DRAGON_TOKEN": {
+    "name": "Master's Waystone Fragment",
+    "category": "",
+    "subcategory": "",
+    "tier": 6,
+    "enchantment": 0
+  },
+  "T7_SHARD_RANDOM_DUNGEON_ELITE_DRAGON_TOKEN": {
+    "name": "Grandmaster's Waystone Fragment",
+    "category": "",
+    "subcategory": "",
+    "tier": 7,
+    "enchantment": 0
+  },
+  "T8_SHARD_RANDOM_DUNGEON_ELITE_DRAGON_TOKEN": {
+    "name": "Elder's Waystone Fragment",
+    "category": "",
+    "subcategory": "",
+    "tier": 8,
+    "enchantment": 0
+  },
+  "T6_RANDOM_DUNGEON_ELITE_DRAGON_TOKEN_D1@1": {
     "name": "",
     "category": "",
     "subcategory": "",
     "tier": 6,
+    "enchantment": 0
+  },
+  "T6_RANDOM_DUNGEON_ELITE_DRAGON_TOKEN_D2@2": {
+    "name": "",
+    "category": "",
+    "subcategory": "",
+    "tier": 6,
+    "enchantment": 0
+  },
+  "T6_RANDOM_DUNGEON_ELITE_DRAGON_TOKEN_D3@3": {
+    "name": "",
+    "category": "",
+    "subcategory": "",
+    "tier": 6,
+    "enchantment": 0
+  },
+  "T6_RANDOM_DUNGEON_ELITE_DRAGON_TOKEN_D4@4": {
+    "name": "",
+    "category": "",
+    "subcategory": "",
+    "tier": 6,
+    "enchantment": 0
+  },
+  "T7_RANDOM_DUNGEON_ELITE_DRAGON_TOKEN_D1@1": {
+    "name": "",
+    "category": "",
+    "subcategory": "",
+    "tier": 7,
+    "enchantment": 0
+  },
+  "T7_RANDOM_DUNGEON_ELITE_DRAGON_TOKEN_D2@2": {
+    "name": "",
+    "category": "",
+    "subcategory": "",
+    "tier": 7,
+    "enchantment": 0
+  },
+  "T7_RANDOM_DUNGEON_ELITE_DRAGON_TOKEN_D3@3": {
+    "name": "",
+    "category": "",
+    "subcategory": "",
+    "tier": 7,
+    "enchantment": 0
+  },
+  "T7_RANDOM_DUNGEON_ELITE_DRAGON_TOKEN_D4@4": {
+    "name": "",
+    "category": "",
+    "subcategory": "",
+    "tier": 7,
+    "enchantment": 0
+  },
+  "T8_RANDOM_DUNGEON_ELITE_DRAGON_TOKEN_D1@1": {
+    "name": "",
+    "category": "",
+    "subcategory": "",
+    "tier": 8,
+    "enchantment": 0
+  },
+  "T8_RANDOM_DUNGEON_ELITE_DRAGON_TOKEN_D2@2": {
+    "name": "",
+    "category": "",
+    "subcategory": "",
+    "tier": 8,
+    "enchantment": 0
+  },
+  "T8_RANDOM_DUNGEON_ELITE_DRAGON_TOKEN_D3@3": {
+    "name": "",
+    "category": "",
+    "subcategory": "",
+    "tier": 8,
+    "enchantment": 0
+  },
+  "T8_RANDOM_DUNGEON_ELITE_DRAGON_TOKEN_D4@4": {
+    "name": "",
+    "category": "",
+    "subcategory": "",
+    "tier": 8,
     "enchantment": 0
   },
   "SKIN_HORSE_FOUNDER_LEGENDARY": {
@@ -80079,6 +81122,62 @@
     "tier": null,
     "enchantment": 0
   },
+  "UNIQUE_UNLOCK_HEAD_VANITY_DRAGON_FACTION": {
+    "name": "Wardrobe Skin: Ancient Mystic's Mask",
+    "category": "",
+    "subcategory": "",
+    "tier": null,
+    "enchantment": 0
+  },
+  "UNIQUE_HEAD_VANITY_DRAGON_FACTION": {
+    "name": "Ancient Mystic's Mask",
+    "category": "",
+    "subcategory": "",
+    "tier": null,
+    "enchantment": 0
+  },
+  "UNIQUE_UNLOCK_ARMOR_VANITY_DRAGON_FACTION": {
+    "name": "Wardrobe Skin: Ancient Mystic's Garb",
+    "category": "",
+    "subcategory": "",
+    "tier": null,
+    "enchantment": 0
+  },
+  "UNIQUE_ARMOR_VANITY_DRAGON_FACTION": {
+    "name": "Ancient Mystic's Garb",
+    "category": "",
+    "subcategory": "",
+    "tier": null,
+    "enchantment": 0
+  },
+  "UNIQUE_UNLOCK_SHOES_VANITY_DRAGON_FACTION": {
+    "name": "Wardrobe Skin: Ancient Mystic's Boots",
+    "category": "",
+    "subcategory": "",
+    "tier": null,
+    "enchantment": 0
+  },
+  "UNIQUE_SHOES_VANITY_DRAGON_FACTION": {
+    "name": "Ancient Mystic's Boots",
+    "category": "",
+    "subcategory": "",
+    "tier": null,
+    "enchantment": 0
+  },
+  "UNIQUE_UNLOCK_CAPE_VANITY_DRAGON_FACTION": {
+    "name": "Wardrobe Skin: Ancient Mystic's Cape",
+    "category": "",
+    "subcategory": "",
+    "tier": null,
+    "enchantment": 0
+  },
+  "UNIQUE_CAPE_VANITY_DRAGON_FACTION": {
+    "name": "Ancient Mystic's Cape",
+    "category": "",
+    "subcategory": "",
+    "tier": null,
+    "enchantment": 0
+  },
   "UNIQUE_HEAD_VANITY_KNIGHT_AOCP": {
     "name": "Noble Knight's Helmet",
     "category": "",
@@ -80186,6 +81285,20 @@
   },
   "UNIQUE_UNLOCK_OFF_VANITY_PUMPKIN_ANGRY_NON_TRADABLE": {
     "name": "Wardrobe Skin: Grump-O'-Lantern",
+    "category": "",
+    "subcategory": "",
+    "tier": null,
+    "enchantment": 0
+  },
+  "SKIN_COUGAR_FIREDRAGON": {
+    "name": "Flamescale",
+    "category": "",
+    "subcategory": "",
+    "tier": null,
+    "enchantment": 0
+  },
+  "UNIQUE_UNLOCK_SKIN_COUGAR_FIREDRAGON": {
+    "name": "Swiftclaw Skin: Flamescale",
     "category": "",
     "subcategory": "",
     "tier": null,
@@ -80326,6 +81439,41 @@
   },
   "SKIN_DIREBEAR_VALKYRIE": {
     "name": "Valkyrie's Direbear",
+    "category": "",
+    "subcategory": "",
+    "tier": null,
+    "enchantment": 0
+  },
+  "UNIQUE_HEAD_VANITY_DRAGONHUNTER": {
+    "name": "Dragon Hunter's Helmet",
+    "category": "",
+    "subcategory": "",
+    "tier": null,
+    "enchantment": 0
+  },
+  "UNIQUE_ARMOR_VANITY_DRAGONHUNTER": {
+    "name": "Dragon Hunter's Armor",
+    "category": "",
+    "subcategory": "",
+    "tier": null,
+    "enchantment": 0
+  },
+  "UNIQUE_SHOES_VANITY_DRAGONHUNTER": {
+    "name": "Dragon Hunter's Boots",
+    "category": "",
+    "subcategory": "",
+    "tier": null,
+    "enchantment": 0
+  },
+  "UNIQUE_CAPE_VANITY_DRAGONHUNTER": {
+    "name": "Dragon Hunter's Cape",
+    "category": "",
+    "subcategory": "",
+    "tier": null,
+    "enchantment": 0
+  },
+  "SKIN_STAG_DRAGONHUNTER": {
+    "name": "Dragon Hunter's Stag",
     "category": "",
     "subcategory": "",
     "tier": null,
@@ -82174,6 +83322,20 @@
   },
   "UNIQUE_UNLOCK_LORE_KEEPER_13": {
     "name": "Keeper Memory - The Feast of Bur",
+    "category": "",
+    "subcategory": "",
+    "tier": null,
+    "enchantment": 0
+  },
+  "UNIQUE_UNLOCK_LORE_DRAGON_11": {
+    "name": "Ancient Memory - How to Befriend your Dragon",
+    "category": "",
+    "subcategory": "",
+    "tier": null,
+    "enchantment": 0
+  },
+  "UNIQUE_UNLOCK_LORE_DRAGON_12": {
+    "name": "Ancient Memory - Follow the Path",
     "category": "",
     "subcategory": "",
     "tier": null,
