@@ -74711,14 +74711,14 @@
     "enchantment": 0
   },
   "UNIQUE_AVATAR_GVGSEASON_35_CRYSTAL": {
-    "name": "",
+    "name": "Avatar: Crystal Cryomancer",
     "category": "",
     "subcategory": "",
     "tier": null,
     "enchantment": 0
   },
   "UNIQUE_AVATAR_GVGSEASON_35_SILVER": {
-    "name": "",
+    "name": "Avatar: Silver Cryomancer",
     "category": "",
     "subcategory": "",
     "tier": null,
@@ -75195,6 +75195,20 @@
   },
   "UNIQUE_AVATAR_GVGSEASON_31_SILVER_SINGLE": {
     "name": "Silver Avatar - Season 31",
+    "category": "",
+    "subcategory": "",
+    "tier": null,
+    "enchantment": 0
+  },
+  "UNIQUE_AVATAR_GVGSEASON_32_CRYSTAL_SINGLE": {
+    "name": "Crystal Avatar - Season 32",
+    "category": "",
+    "subcategory": "",
+    "tier": null,
+    "enchantment": 0
+  },
+  "UNIQUE_AVATAR_GVGSEASON_32_SILVER_SINGLE": {
+    "name": "Silver Avatar - Season 32",
     "category": "",
     "subcategory": "",
     "tier": null,
@@ -76299,6 +76313,13 @@
     "tier": null,
     "enchantment": 0
   },
+  "UNIQUE_UNLOCK_SKIN_HORSE_UNICORN_WHITE_TELLAFRIEND_UNTRADEABLE_2027": {
+    "name": "",
+    "category": "",
+    "subcategory": "",
+    "tier": null,
+    "enchantment": 0
+  },
   "SKIN_HORSE_JESTER_TELLAFRIEND": {
     "name": "Jester Horse",
     "category": "",
@@ -76677,6 +76698,13 @@
     "tier": null,
     "enchantment": 0
   },
+  "UNIQUE_UNLOCK_SKIN_OX_XMAS_YAK_TELLAFRIEND_UNTRADEABLE_2026": {
+    "name": "",
+    "category": "",
+    "subcategory": "",
+    "tier": null,
+    "enchantment": 0
+  },
   "SKIN_OX_BETSY_TELLAFRIEND": {
     "name": "Ol' Betsy",
     "category": "",
@@ -76839,6 +76867,13 @@
     "enchantment": 0
   },
   "UNIQUE_UNLOCK_SKIN_DIREWOLF_HYENA_TELLAFRIEND_UNTRADEABLE": {
+    "name": "",
+    "category": "",
+    "subcategory": "",
+    "tier": null,
+    "enchantment": 0
+  },
+  "UNIQUE_UNLOCK_SKIN_DIREWOLF_HYENA_TELLAFRIEND_UNTRADEABLE_2027": {
     "name": "",
     "category": "",
     "subcategory": "",
@@ -77238,6 +77273,13 @@
     "enchantment": 0
   },
   "UNIQUE_UNLOCK_SKIN_COUGAR_LYNX_TELLAFRIEND_UNTRADEABLE_2025": {
+    "name": "",
+    "category": "",
+    "subcategory": "",
+    "tier": null,
+    "enchantment": 0
+  },
+  "UNIQUE_UNLOCK_SKIN_COUGAR_LYNX_TELLAFRIEND_UNTRADEABLE_2027": {
     "name": "",
     "category": "",
     "subcategory": "",
@@ -81474,6 +81516,41 @@
   },
   "SKIN_STAG_DRAGONHUNTER": {
     "name": "Dragon Hunter's Stag",
+    "category": "",
+    "subcategory": "",
+    "tier": null,
+    "enchantment": 0
+  },
+  "UNIQUE_HEAD_VANITY_SUN_KNIGHT": {
+    "name": "Sunspire Emissary's Helmet",
+    "category": "",
+    "subcategory": "",
+    "tier": null,
+    "enchantment": 0
+  },
+  "UNIQUE_ARMOR_VANITY_SUN_KNIGHT": {
+    "name": "Sunspire Emissary's Armor",
+    "category": "",
+    "subcategory": "",
+    "tier": null,
+    "enchantment": 0
+  },
+  "UNIQUE_SHOES_VANITY_SUN_KNIGHT": {
+    "name": "Sunspire Emissary's Boots",
+    "category": "",
+    "subcategory": "",
+    "tier": null,
+    "enchantment": 0
+  },
+  "UNIQUE_CAPE_VANITY_SUN_KNIGHT": {
+    "name": "Sunspire Emissary's Cape",
+    "category": "",
+    "subcategory": "",
+    "tier": null,
+    "enchantment": 0
+  },
+  "SKIN_STAG_ALPACA_SUN_KNIGHT": {
+    "name": "Sunspire Emissary's Llama",
     "category": "",
     "subcategory": "",
     "tier": null,
