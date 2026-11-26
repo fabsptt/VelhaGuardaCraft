@@ -1,11 +1,11 @@
 {
   "source": "Albion Europe GameInfo API + ao-bin-dumps item catalogue",
-  "itemNodes": 34777,
-  "uniqueItems": 12248,
+  "itemNodes": 34796,
+  "uniqueItems": 12255,
   "candidates": 9958,
   "apiHits": 0,
   "failures": 0,
   "recipes": 7392,
   "enchantedRecipes": 5787,
-  "generatedAt": "2026-11-25T13:00:59.175Z"
+  "generatedAt": "2026-11-26T12:41:31.269Z"
 }

@@ -70651,7 +70651,7 @@
     "enchantment": 0
   },
   "UNIQUE_LOOTCHEST_ADC_DEC2018": {
-    "name": "Yuletide Challenge Chest",
+    "name": "Advent Challenge Chest",
     "category": "",
     "subcategory": "",
     "tier": null,
@@ -70722,6 +70722,20 @@
   },
   "UNIQUE_LOOTCHEST_ADC_OCT2019": {
     "name": "Harvest Challenge Chest",
+    "category": "",
+    "subcategory": "",
+    "tier": null,
+    "enchantment": 0
+  },
+  "UNIQUE_LOOTBAG_ADC_DEC2026": {
+    "name": "Yuletide Present",
+    "category": "",
+    "subcategory": "",
+    "tier": null,
+    "enchantment": 0
+  },
+  "UNIQUE_LOOTBAG_ADC_DEC2026_PREMIUM": {
+    "name": "Yuletide Present",
     "category": "",
     "subcategory": "",
     "tier": null,
@@ -74724,6 +74738,27 @@
     "tier": null,
     "enchantment": 0
   },
+  "UNIQUE_UNLOCK_SKIN_COUGAR_DARK_S35_MIGHTREWARD": {
+    "name": "",
+    "category": "",
+    "subcategory": "",
+    "tier": null,
+    "enchantment": 0
+  },
+  "UNIQUE_AVATAR_GVGSEASON_36_CRYSTAL": {
+    "name": "Avatar: Crystal Frost Ranger",
+    "category": "",
+    "subcategory": "",
+    "tier": null,
+    "enchantment": 0
+  },
+  "UNIQUE_AVATAR_GVGSEASON_36_SILVER": {
+    "name": "Avatar: Silver Frost Ranger",
+    "category": "",
+    "subcategory": "",
+    "tier": null,
+    "enchantment": 0
+  },
   "UNIQUE_AVATAR_GVGSEASON_14_CRYSTAL_SINGLE": {
     "name": "Crystal Avatar - Season 14",
     "category": "",
@@ -75209,6 +75244,20 @@
   },
   "UNIQUE_AVATAR_GVGSEASON_32_SILVER_SINGLE": {
     "name": "Silver Avatar - Season 32",
+    "category": "",
+    "subcategory": "",
+    "tier": null,
+    "enchantment": 0
+  },
+  "UNIQUE_AVATAR_GVGSEASON_33_CRYSTAL_SINGLE": {
+    "name": "Crystal Avatar - Season 33",
+    "category": "",
+    "subcategory": "",
+    "tier": null,
+    "enchantment": 0
+  },
+  "UNIQUE_AVATAR_GVGSEASON_33_SILVER_SINGLE": {
+    "name": "Silver Avatar - Season 33",
     "category": "",
     "subcategory": "",
     "tier": null,
